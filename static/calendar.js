@@ -66,5 +66,29 @@ document.addEventListener('DOMContentLoaded', function() {
         renderCalendar(currentMonth, currentYear);
     };
 
+    let name = "teehee";
+    let description = "somebs";
+    let priority = -999;
+    let date = 1;
+
+    makeEvent.onclick = function() {
+
+        fetch('http://127.0.0.1:5000/add_event?name='+name+'&description='+description+'&priority='+priority+'&date='+date)
+        .then((response) => {
+          return response.json();
+        })
+        .then((myJson) => {
+          console.log("When I make event I get id: " + myJson.event);
+        });
+    };
+
+    fetch('http://127.0.0.1:5000/add_event?name='+name+'&description='+description+'&priority='+priority+'&date='+date)
+  .then((response) => {
+    return response.json();
+  })
+  .then((myJson) => {
+    console.log("When I make event I get id: " + myJson.event);
+  });
+
     renderCalendar(currentMonth, currentYear); // Initial render for the current month
 });
