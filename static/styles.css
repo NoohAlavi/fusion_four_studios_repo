@@ -46,3 +46,9 @@ body {
     font-weight: bold;
     background: #ddd;
 }
+
+.current-day {
+    background-color: rgb(59, 167, 255);
+    color: white
+    /* border: 1px solid ;  */
+}

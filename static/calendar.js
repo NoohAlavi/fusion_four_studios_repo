@@ -4,8 +4,6 @@ document.addEventListener('DOMContentLoaded', function() {
     let currentMonth = new Date().getMonth();
     let currentYear = new Date().getFullYear();
 
-    console.log("im alive");
-
     const monthYearDisplay = document.getElementById('monthYear');
     const prevMonthButton = document.getElementById('prevMonth');
     const nextMonthButton = document.getElementById('nextMonth');
@@ -14,7 +12,7 @@ document.addEventListener('DOMContentLoaded', function() {
         monthYearDisplay.textContent = `${months[month]} ${year}`;
         let calendarContainer = document.getElementById('calendar-container');
         calendarContainer.innerHTML = ''; // Clear previous content
-
+    
         let daysHeader = document.createElement('div');
         daysHeader.className = 'days-header';
         days.forEach(day => {
@@ -24,25 +22,31 @@ document.addEventListener('DOMContentLoaded', function() {
             daysHeader.appendChild(dayDiv);
         });
         calendarContainer.appendChild(daysHeader);
-
+    
         let daysDiv = document.createElement('div');
         daysDiv.className = 'days-container';
         let date = new Date(year, month, 1);
-
+        let currentDate = new Date(); // Define currentDate here
+    
         for (let i = 0; i < date.getDay(); i++) {
             let emptyDayDiv = document.createElement('div');
             emptyDayDiv.className = 'day';
             daysDiv.appendChild(emptyDayDiv);
         }
-
+    
         while (date.getMonth() === month) {
             let dayDiv = document.createElement('div');
             dayDiv.className = 'day';
             dayDiv.textContent = date.getDate();
+    
+            if (date.getDate() === currentDate.getDate() && date.getMonth() === currentDate.getMonth() && date.getFullYear() === currentDate.getFullYear()) {
+                dayDiv.classList.add('current-day');
+            }
+    
             daysDiv.appendChild(dayDiv);
             date.setDate(date.getDate() + 1);
         }
-
+    
         calendarContainer.appendChild(daysDiv);
     }
 
