@@ -1,26 +1,14 @@
 from csv import reader, writer
 
-def loadCsv(filename: str):
+def load_csv(filename: str):
     with open(filename, 'r') as file:
         return list(reader(file))
 
-def saveCsv(filename: str, data: list):
+def save_csv(filename: str, data: list):
     with open(filename, 'w', newline='') as file:
         writer(file).writerows(data)
 
-def saveIcs(filename: str, data: list):
-    with open(filename, 'w') as file:
-        file.write('BEGIN:VCALENDAR\n')
-        for event in data:
-            file.write('BEGIN:VEVENT\n')
-            file.write(f'SUMMARY:{event[0]}\n')
-            file.write(f'DTSTART:{event[1]}\n')
-            file.write(f'DTEND:{event[2]}\n')
-            file.write(f'DESCRIPTION:{event[3]}\n')
-            file.write('END:VEVENT\n')
-        file.write('END:VCALENDAR\n')
-
-def loadIcs(filename: str):
+def load_ics(filename: str):
     with open(filename, 'r') as file:
         data = []
         event = []
@@ -37,3 +25,15 @@ def loadIcs(filename: str):
                 data.append(event)
                 event = []
         return data
+
+def save_ics(filename: str, data: list):
+    with open(filename, 'w') as file:
+        file.write('BEGIN:VCALENDAR\n')
+        for event in data:
+            file.write('BEGIN:VEVENT\n')
+            file.write(f'SUMMARY:{event[0]}\n')
+            file.write(f'DTSTART:{event[1]}\n')
+            file.write(f'DTEND:{event[2]}\n')
+            file.write(f'DESCRIPTION:{event[3]}\n')
+            file.write('END:VEVENT\n')
+        file.write('END:VCALENDAR\n')
