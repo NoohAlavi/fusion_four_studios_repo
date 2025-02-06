@@ -1,8 +1,15 @@
 body {
-    font-family: Arial, sans-serif;
-    background: #f4f4f4;
+    font-family: 'Calibri', sans-serif;
+    background: wheat;
     margin: 0;
     padding: 0;
+}
+
+.title {
+    text-align: center;
+    margin-top: 20px;
+    font-size: 28px;
+    font-weight: bold;
 }
 
 .calendar {
@@ -49,6 +56,6 @@ body {
 
 .current-day {
     background-color: rgb(59, 167, 255);
-    color: white
-    /* border: 1px solid ;  */
+    color: white;
+    border: 2px solid black; 
 }
