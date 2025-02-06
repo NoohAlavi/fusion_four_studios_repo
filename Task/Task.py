@@ -1,10 +1,13 @@
 from time import time
-from math import round
+from enum import Enum
 
-
+class Priority(Enum):
+    LOW = 1
+    MEDIUM = 2
+    HIGH = 3
 
 class Task:
-    def __init__(self, name: str, description: str, priority: int, deadline: str):
+    def __init__(self, name: str, description: str, priority: Priority, deadline: str):
         self.name = name
         self.description = description
         self.priority = priority
