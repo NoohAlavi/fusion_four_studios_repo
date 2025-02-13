@@ -1,33 +1,42 @@
-
-
-document.addEventListener('DOMContentLoaded', function () {
+document.addEventListener('DOMContentLoaded', function() {
     const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
     const days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
-    let currentDate = new Date();
     let currentMonth = new Date().getMonth();
     let currentYear = new Date().getFullYear();
-    let currentView = "month"; 
+    
+    const today = new Date();
+    const currentDay = today.getDate();
+    const currentMonthIndex = today.getMonth();
+    const currentYearValue = today.getFullYear();
+    
     const monthYearDisplay = document.getElementById('monthYear');
     const prevMonthButton = document.getElementById('prevMonth');
     const nextMonthButton = document.getElementById('nextMonth');
-    const calendarContainer = document.getElementById('calendar-container');
 
-
-
-    function renderCalendar(month, year, view = "month") {
+    const eventModeButton = document.getElementById('eventModeButton');
+    const taskModeButton = document.getElementById('taskModeButton');
+    const manageTitle = document.getElementById('manageTitle');  
+    const itemList = document.getElementById('itemList');
+    const addItemButton = document.getElementById('addItemButton');
+    const itemModal = document.getElementById('itemModal');
+    const closeModal = document.getElementById('closeModal');
+    const modalTitle = document.getElementById('modalTitle');
+    const eventForm = document.getElementById('eventForm');
+    const taskForm = document.getElementById('taskForm');
+    const eventTitleInput = document.getElementById('eventTitle');
+    const eventDateInput = document.getElementById('eventDate');
+    const taskTitleInput = document.getElementById('taskTitle');
+    const taskDueDateInput = document.getElementById('taskDueDate');
+    
+    let currentMode = 'event'; 
+    let events = [];
+    let tasks = [];
+    
+    function renderCalendar(month, year) {
         monthYearDisplay.textContent = `${months[month]} ${year}`;
-        calendarContainer.innerHTML = ''; // Clear previous content
-    
-        if (view === "month") {
-            renderMonthView(month, year);
-        } else if (view === "week") {
-            renderWeekView();
-        } else if (view === "day") {
-            renderDayView();
-        }
-    }
-    
-    function renderMonthView(month, year) {
+        let calendarContainer = document.getElementById('calendar-container');
+        calendarContainer.innerHTML = '';  
+        
         let daysHeader = document.createElement('div');
         daysHeader.className = 'days-header';
         days.forEach(day => {
@@ -37,154 +46,116 @@ document.addEventListener('DOMContentLoaded', function () {
             daysHeader.appendChild(dayDiv);
         });
         calendarContainer.appendChild(daysHeader);
-    
+        
         let daysDiv = document.createElement('div');
         daysDiv.className = 'days-container';
         let date = new Date(year, month, 1);
         
-    
         for (let i = 0; i < date.getDay(); i++) {
             let emptyDayDiv = document.createElement('div');
             emptyDayDiv.className = 'day';
             daysDiv.appendChild(emptyDayDiv);
         }
-    
+        
         while (date.getMonth() === month) {
             let dayDiv = document.createElement('div');
             dayDiv.className = 'day';
             dayDiv.textContent = date.getDate();
-    
-            if (date.getDate() === currentDate.getDate() &&
-                date.getMonth() === currentDate.getMonth() &&
-                date.getFullYear() === currentDate.getFullYear()) {
+            
+            if (date.getDate() === currentDay && date.getMonth() === currentMonthIndex && date.getFullYear() === currentYearValue) {
                 dayDiv.classList.add('current-day');
             }
-    
+            
             daysDiv.appendChild(dayDiv);
             date.setDate(date.getDate() + 1);
         }
-    
+        
         calendarContainer.appendChild(daysDiv);
     }
     
-    function renderWeekView() {
-        let weekDiv = document.createElement('div');
-        weekDiv.className = 'week-container';
+    eventModeButton.addEventListener('click', function() {
+        currentMode = 'event';
+        manageTitle.textContent = 'Manage Event';  
+        modalTitle.textContent = 'Add Event';
+        eventForm.style.display = 'block';
+        taskForm.style.display = 'none';
+        renderSidebar();
+    });
     
-        let startOfWeek = new Date(currentDate);
-        startOfWeek.setDate(currentDate.getDate() - currentDate.getDay());
+    taskModeButton.addEventListener('click', function() {
+        currentMode = 'task';
+        manageTitle.textContent = 'Manage Task';  
+        modalTitle.textContent = 'Add Task';
+        taskForm.style.display = 'block';
+        eventForm.style.display = 'none';
+        renderSidebar();
+    });
     
-        for (let i = 0; i < 7; i++) {
-            let dayDiv = document.createElement('div');
-            dayDiv.className = 'day';
-            dayDiv.textContent = `${days[startOfWeek.getDay()]} ${startOfWeek.getDate()}`;
+    addItemButton.addEventListener('click', function() {
+        itemModal.style.display = 'block';
+    });
     
-            if (startOfWeek.toDateString() === new Date().toDateString()) {
-                dayDiv.classList.add('current-day');
-            }
+    closeModal.addEventListener('click', function() {
+        itemModal.style.display = 'none';
+    });
     
-            weekDiv.appendChild(dayDiv);
-            startOfWeek.setDate(startOfWeek.getDate() + 1);
-        }
-    
-        calendarContainer.appendChild(weekDiv);
+    function addItemToSidebar(item) {
+        const li = document.createElement('li');
+        li.textContent = `${item.title} - ${item.date}`;
+        itemList.appendChild(li);
     }
     
-    function renderDayView() {
-        calendarContainer.innerHTML = ''; 
-
-        let dayHeader = document.createElement('div');
-        dayHeader.className = 'day-header';
-        dayHeader.textContent = `${days[currentDate.getDay()]}, ${currentDate.getDate()}`;
-        calendarContainer.appendChild(dayHeader);
-    
-        let daySchedule = document.createElement('div');
-        daySchedule.className = 'day-schedule';
-    
-        for (let hour = 0; hour < 24; hour++) {
-            let timeSlot = document.createElement('div');
-            timeSlot.className = 'time-slot';
-            let formattedHour = hour.toString().padStart(2, '0') + ":00";
-    
-            timeSlot.innerHTML = `<span class="time-label">${formattedHour}</span> <span class="event"></span>`;
-            daySchedule.appendChild(timeSlot);
-        }
-    
-        calendarContainer.appendChild(daySchedule);
+    function renderSidebar() {
+        itemList.innerHTML = '';  
+        let items = currentMode === 'event' ? events : tasks;
+        
+        items.forEach(item => {
+            addItemToSidebar(item);
+        });
     }
     
-
-
-
-
-    prevMonthButton.onclick = function () {
+    eventForm.addEventListener('submit', function(event) {
+        event.preventDefault();
+        const title = eventTitleInput.value;
+        const date = eventDateInput.value;
+        const newEvent = { title, date };
+        events.push(newEvent);
+        renderSidebar();
+        itemModal.style.display = 'none';
+        eventForm.reset();
+    });
+    
+    taskForm.addEventListener('submit', function(event) {
+        event.preventDefault();
+        const title = taskTitleInput.value;
+        const dueDate = taskDueDateInput.value;
+        const newTask = { title, date: dueDate };
+        tasks.push(newTask);
+        renderSidebar();
+        itemModal.style.display = 'none';
+        taskForm.reset();
+    });
+    
+    prevMonthButton.addEventListener('click', function() {
         if (currentMonth === 0) {
             currentMonth = 11;
-            currentYear -= 1;
+            currentYear--;
         } else {
-            currentMonth -= 1;
+            currentMonth--;
         }
         renderCalendar(currentMonth, currentYear);
-    };
-
-    nextMonthButton.onclick = function () {
+    });
+    
+    nextMonthButton.addEventListener('click', function() {
         if (currentMonth === 11) {
             currentMonth = 0;
-            currentYear += 1;
+            currentYear++;
         } else {
-            currentMonth += 1;
+            currentMonth++;
         }
         renderCalendar(currentMonth, currentYear);
-    };
-
-    document.getElementById('monthView').onclick = function () {
-        currentView = "month";
-        renderCalendar(currentMonth, currentYear, "month");
-    };
-
-    document.getElementById('weekView').onclick = function () {
-        currentView = "week";
-        renderCalendar(currentMonth, currentYear, "week");
-    };
-
-    document.getElementById('dayView').onclick = function () {
-        currentView = "day";
-        renderCalendar(currentMonth, currentYear, "day");
-    };
-
-
-
-    let name = "teehee";
-    let description = "somebs";
-    let priority = -999;
-    let date = 1;
-
-
-    renderCalendar(currentMonth, currentYear);
-    console.log(currentMonth + " of " + currentYear);
-
-
-    makeEvent.onclick = function () {
-
-        fetch('http://127.0.0.1:5000/add_event?name=' + name + '&description=' + description + '&priority=' + priority + '&date=' + date)
-            .then((response) => {
-                return response.json();
-            })
-            .then((myJson) => {
-                console.log("When I make event I get id: " + myJson.event);
-            });
-    };
-
-    fetch('http://127.0.0.1:5000/add_event?name=' + name + '&description=' + description + '&priority=' + priority + '&date=' + date)
-        .then((response) => {
-            return response.json();
-        })
-        .then((myJson) => {
-            console.log("When I make event I get id: " + myJson.event);
-        });
-
-
+    });
+    
+    renderCalendar(currentMonth, currentYear); 
+    renderSidebar(); 
 });
-
-
-
