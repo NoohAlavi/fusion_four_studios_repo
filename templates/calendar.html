@@ -1,21 +1,31 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Event Horizon Calendar</title>
-<link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Event Horizon Calendar</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
 </head>
+
 <body>
-<h1 class="title">Event Horizon Calendar</h1>
-<div class="calendar">
-    <div class="controls">
-        <button id="prevMonth">⬅️</button>
-        <div id="monthYear" class="month-year"></div>
-        <button id="nextMonth">➡️</button>
+    <h1 class="title">Event Horizon Calendar</h1>
+    <div class="calendar">
+        <div class="controls">
+            <button id="prevMonth">⬅️</button>
+            <div id="monthYear" class="month-year"></div>
+            <button id="nextMonth">➡️</button>
+        </div>
+        <div id="calendar-container"></div>
     </div>
-    <div id="calendar-container"></div>
-</div>
-<script src="{{ url_for('static', filename='calendar.js') }}"></script>
+    <div class="view-toggle">
+        <div class="viewControls">
+            <button id="monthView">Month</button>
+            <button id="weekView">Week</button>
+            <button id="dayView">Day</button>
+        </div>
+    </div>
+    <script src="{{ url_for('static', filename='calendar.js') }}"></script>
 </body>
+
 </html>
