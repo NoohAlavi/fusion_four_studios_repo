@@ -1,31 +1,60 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Event Horizon Calendar</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
 </head>
-
 <body>
-    <h1 class="title">Event Horizon Calendar</h1>
-    <div class="calendar">
-        <div class="controls">
-            <button id="prevMonth">⬅️</button>
-            <div id="monthYear" class="month-year"></div>
-            <button id="nextMonth">➡️</button>
+    <div class="container">
+
+        <div class="calendar">
+            <div class="controls">
+                <button id="prevMonth">⬅️</button>
+                <div id="monthYear" class="month-year"></div>
+                <button id="nextMonth">➡️</button>
+            </div>
+            <div id="calendar-container"></div>
         </div>
-        <div id="calendar-container"></div>
+
+        <div class="sidebar">
+            <h2>Manage</h2>
+        
+            <div class="mode-toggle">
+                <button id="eventModeButton">Events</button>
+                <button id="taskModeButton">Tasks</button>
+            </div>
+        
+            <ul id="itemList"></ul>
+        
+            <button id="addItemButton">Add Item</button>
+        
+            <div id="itemModal" class="modal">
+                <div class="modal-content">
+                    <span id="closeModal" class="close">&times;</span>
+                    <h2 id="modalTitle">Add Event</h2>
+        
+                    <form id="eventForm" class="form" style="display: none;">
+                        <label for="eventTitle">Event Title:</label>
+                        <input type="text" id="eventTitle" required><br><br>
+                        <label for="eventDate">Event Date:</label>
+                        <input type="date" id="eventDate" required><br><br>
+                        <button type="submit">Save Event</button>
+                    </form>
+        
+                    <form id="taskForm" class="form" style="display: none;">
+                        <label for="taskTitle">Task Title:</label>
+                        <input type="text" id="taskTitle" required><br><br>
+                        <label for="taskDueDate">Due Date:</label>
+                        <input type="date" id="taskDueDate" required><br><br>
+                        <button type="submit">Save Task</button>
+                    </form>
+                </div>
+            </div>
+        </div>      
     </div>
-    <div class="view-toggle">
-        <div class="viewControls">
-            <button id="monthView">Month</button>
-            <button id="weekView">Week</button>
-            <button id="dayView">Day</button>
-        </div>
-    </div>
+
     <script src="{{ url_for('static', filename='calendar.js') }}"></script>
 </body>
-
 </html>
