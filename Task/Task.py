@@ -1,5 +1,6 @@
 from time import time
 from enum import Enum
+from datetime import datetime
 
 class Priority(Enum):
     LOW = 1
@@ -11,7 +12,7 @@ class Task:
         self.name = name
         self.description = description
         self.priority = priority
-        self.deadline = deadline
+        self.deadline = datetime(deadline[0], deadline[1], deadline[2])
         
         self.id = round(time())
         pass
@@ -27,7 +28,7 @@ class Event(Task):
         super().__init__(name, description, location, priority, deadline)
         
         self.location = location
-        self.start_date = start_date
+        self.start_date = datetime(start_date[0], start_date[1], start_date[2])
         self.location = location
 
     def export_as_csv(self):
