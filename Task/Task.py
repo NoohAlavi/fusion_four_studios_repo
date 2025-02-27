@@ -1,5 +1,6 @@
 from time import time
 from enum import Enum
+from datetime import datetime
 
 class Priority(Enum):
     LOW = 1
@@ -11,25 +12,27 @@ class Task:
         self.name = name
         self.description = description
         self.priority = priority
-        self.deadline = deadline
+        self.deadline = datetime(deadline[0], deadline[1], deadline[2])
+        
         self.id = round(time())
-
-    def __str__(self):
-        return f"Task: {self.name} (Due: {self.deadline}) - Priority: {self.priority.name} - {self.description}"
+        pass
 
     def export_as_csv(self):
         pass
 
+    def __str__(self):
+        pass
 
 class Event(Task):
-    def __init__(self, name: str, description: str, location: str, priority: Priority, start_time: str, end_time: str):
-        super().__init__(name, description, priority, None)  # No deadline for events
+    def __init__(self, name, description, location, priority, start_date, deadline):
+        super().__init__(name, description, location, priority, deadline)
+        
         self.location = location
-        self.start_time = start_time
-        self.end_time = end_time
-
-    def __str__(self):
-        return f"Event: {self.name} (Start: {self.start_time} - End: {self.end_time}) - Location: {self.location} - {self.description}"
+        self.start_date = datetime(start_date[0], start_date[1], start_date[2])
+        self.location = location
 
     def export_as_csv(self):
+        pass
+
+    def __str__(self):
         pass

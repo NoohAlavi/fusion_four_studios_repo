@@ -1,60 +1,99 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Event Horizon Calendar</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
-</head>
-<body>
-    <div class="container">
+  </head>
+  <body>
+    <h1 class="title">Event Horizon Calendar</h1>
+    <div class="main-container">
 
+      <!-- Left: Calendar Panel -->
+      <div class="calendar-panel">
         <div class="calendar">
-            <div class="controls">
-                <button id="prevMonth">⬅️</button>
-                <div id="monthYear" class="month-year"></div>
-                <button id="nextMonth">➡️</button>
-            </div>
-            <div id="calendar-container"></div>
+          <div class="controls">
+            <button id="prevMonth">⬅️</button>
+            <div id="monthYear" class="month-year"></div>
+            <button id="nextMonth">➡️</button>
+          </div>
+          <div id="calendar-container"></div>
         </div>
+        <div class="view-toggle">
+          <div class="viewControls">
+            <button id="monthView">Month</button>
+            <button id="weekView">Week</button>
+            <button id="dayView">Day</button>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Event/Task Panel -->
+      <div class="event-panel">
+        <h2>Events &amp; Tasks</h2>
+        <button id="openModal">Add Event/Task</button>
+        <ul id="eventTaskList"></ul>
+      </div>
+    </div>
 
-        <div class="sidebar">
-            <h2>Manage</h2>
-        
-            <div class="mode-toggle">
-                <button id="eventModeButton">Events</button>
-                <button id="taskModeButton">Tasks</button>
-            </div>
-        
-            <ul id="itemList"></ul>
-        
-            <button id="addItemButton">Add Item</button>
-        
-            <div id="itemModal" class="modal">
-                <div class="modal-content">
-                    <span id="closeModal" class="close">&times;</span>
-                    <h2 id="modalTitle">Add Event</h2>
-        
-                    <form id="eventForm" class="form" style="display: none;">
-                        <label for="eventTitle">Event Title:</label>
-                        <input type="text" id="eventTitle" required><br><br>
-                        <label for="eventDate">Event Date:</label>
-                        <input type="date" id="eventDate" required><br><br>
-                        <button type="submit">Save Event</button>
-                    </form>
-        
-                    <form id="taskForm" class="form" style="display: none;">
-                        <label for="taskTitle">Task Title:</label>
-                        <input type="text" id="taskTitle" required><br><br>
-                        <label for="taskDueDate">Due Date:</label>
-                        <input type="date" id="taskDueDate" required><br><br>
-                        <button type="submit">Save Task</button>
-                    </form>
-                </div>
-            </div>
-        </div>      
+    <!-- Modal for Adding an Event or Task -->
+    <div id="modal" class="modal">
+      <div class="modal-content">
+        <span class="close">&times;</span>
+        <form id="eventTaskForm">
+          <label for="type">Type:</label>
+          <select id="type" name="type">
+            <option value="event">Event</option>
+            <option value="task">Task</option>
+          </select>
+
+          <label for="title">Title:</label>
+          <input type="text" id="title" name="title" required />
+
+          <!-- Event-specific fields -->
+          <div id="eventFields">
+            <label for="notes">Notes:</label>
+            <textarea id="notes" name="notes"></textarea>
+            <label for="startTime">Start Time:</label>
+            <input type="datetime-local" id="startTime" name="startTime" required />
+            <label for="endTime">End Time:</label>
+            <input type="datetime-local" id="endTime" name="endTime" required />
+            <label for="location">Location:</label>
+            <input type="text" id="location" name="location" />
+            <label for="repeat">Repeat:</label>
+            <select id="repeat" name="repeat">
+              <option value="once" selected>Once</option>
+              <option value="weekly">Weekly</option>
+              <option value="monthly">Monthly</option>
+            </select>
+            <label for="eventColor">Color:</label>
+            <input type="color" id="eventColor" name="eventColor" value="#ff0000" />
+          </div>
+
+          <!-- Task-specific fields -->
+          <div id="taskFields" style="display: none;">
+            <label for="deadline">Deadline:</label>
+            <input type="datetime-local" id="deadline" name="deadline" required />
+            <label for="status">Status:</label>
+            <select id="status" name="status">
+              <option value="pending" selected>Pending</option>
+              <option value="done">Done</option>
+            </select>
+            <label for="priority">Priority:</label>
+            <select id="priority" name="priority">
+              <option value="low">Low</option>
+              <option value="medium" selected>Medium</option>
+              <option value="high">High</option>
+            </select>
+            <label for="taskColor">Color:</label>
+            <input type="color" id="taskColor" name="taskColor" value="#0000ff" />
+          </div>
+          <button type="submit">Add</button>
+        </form>
+      </div>
     </div>
 
     <script src="{{ url_for('static', filename='calendar.js') }}"></script>
-</body>
+  </body>
 </html>

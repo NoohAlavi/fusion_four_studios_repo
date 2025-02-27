@@ -43,7 +43,3 @@ def get_daily_events():
 if __name__ == '__main__':
     APP.debug=True
     APP.run()
-
-
-
-
