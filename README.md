@@ -1,5 +1,6 @@
 # Event Horizon Calendar
 Built by: Fusion Five Studios
+
 Event Horizon Calendar is a calendar app allowing users add task/event to their calendar with core features "Task prioritizer" and "Cyber housekeepe" (Both of them are still in development)
 
 # Environment requirement
