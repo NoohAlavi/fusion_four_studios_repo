@@ -10,10 +10,16 @@ document.addEventListener('DOMContentLoaded', function () {
     
     //Get elements for calendar navigation and control
     const monthYearDisplay = document.getElementById('monthYear');
-    const prevMonthButton = document.getElementById('prevMonth');
-    const nextMonthButton = document.getElementById('nextMonth');
+    const prevPeriodButton = document.getElementById('prevPeriod');
+    const nextPeriodButton = document.getElementById('nextPeriod');
     const calendarContainer = document.getElementById('calendar-container');
   
+    //Elements for task and event modals.
+    const eventModal = document.getElementById("eventModal");
+    const taskModal = document.getElementById("taskModal");
+    const openEventModalBtn = document.getElementById("openEventModal");
+    const openTaskModalBtn = document.getElementById("openTaskModal");
+    const closeButtons = document.querySelectorAll(".modal .close");
 
     //Calendar rendering logic
 
@@ -140,7 +146,7 @@ document.addEventListener('DOMContentLoaded', function () {
     //Navigation Controls
 
     //Navigate to the previous time period
-    prevMonthButton.onclick = function () {
+    prevPeriodButton.onclick = function () {
       if (currentView === "month") {
         if (viewDate.getMonth() === 0) {
           viewDate.setMonth(11);
@@ -157,7 +163,7 @@ document.addEventListener('DOMContentLoaded', function () {
     };
   
     //Navigate to the next time period
-    nextMonthButton.onclick = function () {
+    nextPeriodButton.onclick = function () {
       if (currentView === "month") {
         if (viewDate.getMonth() === 11) {
           viewDate.setMonth(0);
@@ -194,68 +200,79 @@ document.addEventListener('DOMContentLoaded', function () {
   
     renderCalendar();
   
-    // Modal Handling for Adding Events/Tasks
-    const modal = document.getElementById('modal');
-    const openModalBtn = document.getElementById('openModal');
-    const closeModalSpan = document.querySelector('.modal .close');
-    
-    openModalBtn.addEventListener('click', function () {
-      modal.style.display = 'block';
+    //Event Modal
+    openEventModalBtn.addEventListener("click", function () {
+        eventModal.style.display = "block";
     });
-  
-    closeModalSpan.addEventListener('click', function () {
-      modal.style.display = 'none';
+
+    //Task Modal
+    openTaskModalBtn.addEventListener("click", function () {
+        taskModal.style.display = "block";
     });
-  
-    window.addEventListener('click', function (event) {
-      if (event.target === modal) {
-        modal.style.display = 'none';
-      }
+
+    closeButtons.forEach(button => {
+        button.addEventListener("click", function () {
+            eventModal.style.display = "none";
+            taskModal.style.display = "none";
+        });
     });
-  
-    //Switch between Event and Task fields based on selection
-    document.getElementById('type').addEventListener('change', function () {
-      if (this.value === 'event') {
-        document.getElementById('eventFields').style.display = 'block';
-        document.getElementById('taskFields').style.display = 'none';
-      } else {
-        document.getElementById('eventFields').style.display = 'none';
-        document.getElementById('taskFields').style.display = 'block';
-      }
-    });
-  
-    //Handle form submission for adding events/tasks
-    document.getElementById('eventTaskForm').addEventListener('submit', function (e) {
-        e.preventDefault();
-        const type = document.getElementById('type').value;
-        const title = document.getElementById('title').value;
-        let displayText = title;
-    
-        if (type === 'event') {
-          const startTime = document.getElementById('startTime').value;
-          const endTime = document.getElementById('endTime').value;
-          const startDisplay = new Date(startTime).toLocaleString();
-          const endDisplay = new Date(endTime).toLocaleString();
-          displayText += `: ${startDisplay} - ${endDisplay}`;
-        } else {
-          const deadline = document.getElementById('deadline').value;
-          const deadlineDisplay = new Date(deadline).toLocaleString();
-          displayText += `: Due ${deadlineDisplay}`;
+
+    window.addEventListener("click", function (event) {
+        if (event.target === eventModal) {
+            eventModal.style.display = "none";
         }
-    
-        const li = document.createElement('li');
-        li.textContent = displayText;
-        const list = document.getElementById('eventTaskList');
-        list.appendChild(li);
-        
-        //Log to console for debugging
-        console.log('Event added:', displayText, 'Total items:', list.childElementCount);
-    
-        this.reset();
-        document.getElementById('eventFields').style.display = 'block';
-        document.getElementById('taskFields').style.display = 'none';
-    
-        modal.style.display = 'none';
+        if (event.target === taskModal) {
+            taskModal.style.display = "none";
+        }
     });
+
+  //Handle Event Submission
+  document.getElementById('eventForm').addEventListener('submit', function (e) {
+      e.preventDefault();
+
+      const title = document.getElementById('eventTitle').value;
+      const startTime = document.getElementById('startTime').value;
+      const notes = document.getElementById('eventNotes').value;
+      const endTime = document.getElementById('endTime').value;
+
+      if (!title || !startTime || !endTime) {
+          alert("Please fill in all fields for the event.");
+          return;
+      }
+
+      const li = document.createElement('li');
+      li.textContent = `${title}: ${new Date(startTime).toLocaleString()} - ${new Date(endTime).toLocaleString()}`;
+      
+      document.getElementById('eventTaskList').appendChild(li);
+
+      //Console log for debugging
+      console.log('Event Added: ', li.textContent)
+
+      this.reset();
   });
+
+  //Handle Task Submission
+  document.getElementById('taskForm').addEventListener('submit', function (e) {
+      e.preventDefault();
+
+      const title = document.getElementById('taskTitle').value;
+      const deadline = document.getElementById('deadline').value;
+
+      if (!title || !deadline) {
+          alert("Please fill in all fields for the task.");
+          return;
+      }
+
+      const li = document.createElement('li');
+      li.textContent = `${title}: Due ${new Date(deadline).toLocaleString()}`;
+
+      document.getElementById('eventTaskList').appendChild(li);
+      
+      //Console log for debugging
+      console.log('Task Added: ', li.textContent)
+
+      this.reset();
+  });
+ 
+});
   

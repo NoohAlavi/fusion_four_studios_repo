@@ -133,9 +133,10 @@ body {
 
 .event-panel {
     width: 300px;
-    margin-left: 20px;
+    height: 470px;
+    margin: 20px 60px 0px 20px;
     background: white;
-    padding: 20px;
+    padding: 40px 20px 40px 20px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
@@ -175,6 +176,10 @@ body {
     border: 1px solid #888;
     width: 90%;
     max-width: 500px;
+}
+
+button[type="submit"] {
+    margin-top: 15px;
 }
 
 .close {

@@ -1,17 +1,15 @@
-# fusion_four_studios_repo
-Fusion Four Studios Repo
-
-
+# Event Horizon Calendar
+Built by: Fusion Five Studios
 Event Horizon Calendar is a calendar app allowing users add task/event to their calendar with core features "Task prioritizer" and "Cyber housekeepe" (Both of them are still in development)
 
-# environment requirement
+# Environment requirement
     python3 
     A web browser(IE,Chrome,Fox..etc)
 
-# required package
+# Required package(s)
     Flask
 
-# Installation/setup instruction
+# Installation/Setup Instructions
     1.Environment setup:
     Windows users press *WIN + R* then type *cmd* to open Command Prompt.
     Run:
