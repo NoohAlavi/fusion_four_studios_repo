@@ -274,5 +274,20 @@ document.addEventListener('DOMContentLoaded', function () {
       this.reset();
   });
  
+const viewButtons = document.querySelectorAll(".viewControls button");
+
+    viewButtons.forEach(button => {
+        button.addEventListener("click", function () {
+            // Remove 'active' from all buttons
+            viewButtons.forEach(btn => btn.classList.remove("active"));
+
+            // Add 'active' to the clicked button
+            this.classList.add("active");
+        });
+    });
+
+
+
+    
 });
   

@@ -132,13 +132,11 @@ body {
 }
 
 .event-panel {
-    width: 300px;
-    height: 470px;
-    margin: 20px 60px 0px 20px;
-    background: white;
-    padding: 40px 20px 40px 20px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Centers content inside */
 }
+
 
 .event-panel h2 {
     text-align: center;
@@ -210,4 +208,55 @@ button[type="submit"] {
     padding: 5px;
     margin-top: 5px;
     box-sizing: border-box;
+}
+
+.viewControls button {
+    padding: 10px;
+    border: none;
+    cursor: pointer;
+    background-color: lightgray;
+}
+
+.viewControls button.active {
+    background-color: #007bff !important;
+    color: white !important;
+    font-weight: bold !important;
+}
+
+
+.event-panel {
+    width: 90%;
+    max-width: 350px; /* Ensures it stays within a reasonable size */
+    margin: 0 auto; /* Centers the panel */
+    padding: 30px 20px;
+    background: white;
+    text-align: center;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.event-panel button {
+    all: unset; /* Removes default button styles */
+    display: inline-block;
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-size: 16px;
+    text-align: center;
+    cursor: pointer;
+    transition: background 0.3s, color 0.3s;
+    background-color: #007bff; /* Primary color */
+    color: white;
+    font-weight: bold;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Hover Effect */
+.event-panel button:hover {
+    background-color: #0056b3;
+    box-shadow: 0px 6px 10px rgba(0, 0, 0, 0.15);
+}
+
+/* Optional: Make Them Full Width */
+.event-panel button {
+    width: 50%;
+    margin: 10px 0;
 }
