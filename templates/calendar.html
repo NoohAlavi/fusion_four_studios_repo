@@ -1,3 +1,10 @@
+<!-- 
+ Authors: Johathan Lavoie, Mason Cacheino, Nooh Alavi, Rahif Haffeez, Shawn Xiao
+ Date: February 6th, 2025
+ Filename: calendar.html
+ Description: Contains the front-end code for the calendar. It is the HTML template rendered by Flask, provides the front-end structure and layout.
+-->
+ 
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -59,6 +66,13 @@
                 <label for="location">Location:</label>
                 <input type="text" id="location">
 
+                <label for="eventPriority">Priority:</label>
+                <select id="eventPriority">
+                    <option value="low">Low</option>
+                    <option value="medium" selected>Medium</option>
+                    <option value="high">High</option>
+                </select>
+
                 <label for="repeat">Repeat:</label>
                 <select id="repeat">
                     <option value="once" selected>Once</option>
@@ -92,8 +106,8 @@
                     <option value="done">Done</option>
                 </select>
 
-                <label for="priority">Priority:</label>
-                <select id="priority">
+                <label for="taskPriority">Priority:</label>
+                <select id="taskPriority">
                     <option value="low">Low</option>
                     <option value="medium" selected>Medium</option>
                     <option value="high">High</option>
