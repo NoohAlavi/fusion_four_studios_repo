@@ -1,3 +1,8 @@
+#Authors: Johathan Lavoie, Mason Cacheino, Nooh Alavi, Rahif Haffeez, Shawn Xiao
+#Date: February 6th, 2025
+#Filename: file_managing.py
+#Description: The file handles file I/O operations for reading and writing task and event data to CSV files. As well as loading and saving events in the ICS format.
+
 from csv import reader, writer
 
 def load_csv(filename: str):
