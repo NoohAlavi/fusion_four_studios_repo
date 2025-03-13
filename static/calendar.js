@@ -97,6 +97,7 @@ document.addEventListener('DOMContentLoaded', function () {
     //Display each day of the week
     for (let i = 0; i < 7; i++) {
       let dayDiv = document.createElement('div');
+      dayDiv.style.textAlign = 'left';
       dayDiv.className = 'day';
       dayDiv.textContent = `${days[startOfWeek.getDay()]} ${startOfWeek.getDate()}`;
 
