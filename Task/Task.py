@@ -13,13 +13,14 @@ class Priority(Enum):
     HIGH = 3
 
 class Task:
-    def __init__(self, name: str, description: str, priority: Priority, deadline: str):
+    def __init__(self, name: str, description: str, priority: Priority, deadline: str, colour: str):
         self.name = name
         self.description = description
         self.priority = priority
+        self.colour = colour
 
         #Parse the combined date/time (e.g. "03/12/2025, 2:30PM")
-        self.deadline = datetime.strptime(deadline, "%m/%d/%y, %I:%M %p")
+        self.deadline = datetime.strptime(deadline, "%Y-%m-%dT%H:%M")
         
         self.id = round(time())
         
@@ -33,25 +34,27 @@ class Task:
                 "Task",
                 self.name,
                 self.description,
-                self.priority.name,
-                self.deadline.strftime('%m/%d/%y, %I:%M %p')
+                self.priority,
+                self.deadline.strftime('%Y-%m-%dT%H:%M'),
+                self.colour
         ]
 
     def __str__(self):
-        return (f"Task: {self.name} Deadline: {self.deadline.strftime('%m/%d/%y, %I:%M %p')}")
+        return (f"Task: {self.name} Deadline: {self.deadline.strftime('%Y-%m-%dT%H:%M')}")
 
 class Event(Task):
-    def __init__(self, name, description, location, priority, start_datetime, end_datetime):
-        super().__init__(name, description, priority, end_datetime) #Initialize Task with a deadline (end_time)
+    def __init__(self, name, description, location, priority, repeatability, start_datetime, end_datetime, colour):
+        super().__init__(name, description, priority, end_datetime, colour) 
         
         self.location = location
-        self.start_datetime = datetime.strptime(f"{start_datetime}", "%m/%d/%y, %I:%M %p")
-        self.end_datetime = datetime.strptime(f"{end_datetime}", "%m/%d/%y, %I:%M %p")
+        self.repeatability = repeatability
+        self.start_datetime = datetime.strptime(f"{start_datetime}", "%Y-%m-%dT%H:%M")
+        self.end_datetime = datetime.strptime(f"{end_datetime}", "%Y-%m-%dT%H:%M")
 
     def export_as_csv(self):
         """
         Return a list that canbe written as a single CSV row.
-        Events: [id, "Event", name, description, location, priority, start_datetime, end_datetime]
+        Events: [id, "Event", name, description, location, priority, repeatability, start_datetime, end_datetime, colour]
         """
 
         return [
@@ -59,11 +62,13 @@ class Event(Task):
             "Event",
             self.name,
             self.description,
-            self.priority.name,
+            self.priority,
             self.location,
-            self.start_datetime.strftime("%m/%d/%y, %I:%M %p"),
-            self.end_datetime.strftime("%m/%d/%y, %I:%M %p")
+            self.repeatability,
+            self.start_datetime.strftime("%Y-%m-%dT%H:%M"),
+            self.end_datetime.strftime("%Y-%m-%dT%H:%M"),
+            self.colour
         ]
 
     def __str__(self):
-        return (f"Event: {self.name} at {self.location} (Starts: {self.start_datetime.strftime('%m/%d/%y, %I:%M %p')}, Ends: {self.end_datetime.strftime('%m/%d/%y, %I:%M %p')})")
+        return (f"Event: {self.name} at {self.location} (Starts: {self.start_datetime.strftime('%Y-%m-%dT%H:%M')}, Ends: {self.end_datetime.strftime('%Y-%m-%dT%H:%M')})")

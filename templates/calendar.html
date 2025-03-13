@@ -68,9 +68,9 @@
 
                 <label for="eventPriority">Priority:</label>
                 <select id="eventPriority">
-                    <option value="low">Low</option>
-                    <option value="medium" selected>Medium</option>
-                    <option value="high">High</option>
+                    <option value="1">Low</option>
+                    <option value="2" selected>Medium</option>
+                    <option value="3">High</option>
                 </select>
 
                 <label for="repeat">Repeat:</label>
@@ -80,8 +80,8 @@
                     <option value="monthly">Monthly</option>
                 </select>
 
-                <label for="eventColor">Color:</label>
-                <input type="color" id="eventColor" value="#ff0000">
+                <label for="eventColour">Colour:</label>
+                <input type="color" id="eventColour" value="#ff0000">
 
                 <button type="submit">Add Event</button>
             </form>
@@ -97,24 +97,21 @@
                 <label for="taskTitle">Title:</label>
                 <input type="text" id="taskTitle" required>
 
+                <label for="taskNotes">Notes: </label>
+                <input type="text" id="taskNotes">
+
                 <label for="deadline">Deadline:</label>
                 <input type="datetime-local" id="deadline" required>
 
-                <label for="status">Status:</label>
-                <select id="status">
-                    <option value="pending" selected>Pending</option>
-                    <option value="done">Done</option>
-                </select>
-
                 <label for="taskPriority">Priority:</label>
                 <select id="taskPriority">
-                    <option value="low">Low</option>
-                    <option value="medium" selected>Medium</option>
-                    <option value="high">High</option>
+                    <option value="1">Low</option>
+                    <option value="2" selected>Medium</option>
+                    <option value="3">High</option>
                 </select>
 
-                <label for="taskColor">Color:</label>
-                <input type="color" id="taskColor" value="#0000ff">
+                <label for="taskColour">Colour:</label>
+                <input type="color" id="taskColour" value="#0000ff">
 
                 <button type="submit">Add Task</button>
             </form>

@@ -6,7 +6,7 @@
 */
 
 document.addEventListener('DOMContentLoaded', function () {
-  //Calendar Setup and Initiialisation 
+  //Calendar Setup and Intialization 
   const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
   const days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 
@@ -239,29 +239,50 @@ document.addEventListener('DOMContentLoaded', function () {
 
     const title = document.getElementById('eventTitle').value;
     const notes = document.getElementById('eventNotes').value;
-    const startTime = document.getElementById('startTime').value;
-    const endTime = document.getElementById('endTime').value;
     const eventLocation = document.getElementById('location').value;
     const eventPriority = document.getElementById('eventPriority').value;
-    const repeatability = document.getElementById('repeat').value;
-    
+    const eventRepeat = document.getElementById('repeat').value;
+    const startTime = document.getElementById('startTime').value;
+    const endTime = document.getElementById('endTime').value;
+    const colour = document.getElementById('eventColour').value;
+
 
     if (!title || !startTime || !endTime) {
       alert("Please fill in all fields for the event.");
       return;
     }
 
-    const li = document.createElement('li');
-    li.textContent = `${title}: ${new Date(startTime).toLocaleString()} - ${new Date(endTime).toLocaleString()}`;
+    //Prepare data for the POST request
+    const eventData = {
+      name: title,
+      description: notes,
+      priority: eventPriority,
+      location: eventLocation,
+      repeatability: eventRepeat,
+      start_datetime: startTime,
+      end_datetime: endTime,
+      colour: colour
+    };
 
-    document.getElementById('eventTaskList').appendChild(li);
+    fetch('/add_event', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(eventData),
+    })
+    .then(response => response.json())
+    .then(data => {
+      //On success, append the event to the event list
+      const li = document.createElement('li');
+      li.textContent = `${title}: ${new Date(startTime).toLocaleString()} - ${new Date(endTime).toLocaleString()}`;
+      document.getElementById('eventTaskList').appendChild(li);
+      eventModal.style.display = "none";
+      this.reset();
+    }) //Send console for debugging
+    .catch(error => console.error('Error adding event:', error));
 
-    //Console log for debugging
-    console.log('Event Added: ', li.textContent)
 
-    eventModal.style.display = "none";
-
-    this.reset();
   });
 
   //Handle Task Submission
@@ -269,24 +290,43 @@ document.addEventListener('DOMContentLoaded', function () {
     e.preventDefault();
 
     const title = document.getElementById('taskTitle').value;
-    const deadline = document.getElementById('deadline').value;
+    const description = document.getElementById('taskNotes').value;
+    const taskDeadline = document.getElementById('deadline').value;
+    const priority = document.getElementById('taskPriority').value;
+    const colour = document.getElementById('taskColour').value;
 
     if (!title || !deadline) {
       alert("Please fill in all fields for the task.");
       return;
     }
 
-    const li = document.createElement('li');
-    li.textContent = `${title}: Due ${new Date(deadline).toLocaleString()}`;
+    //Prepare data for the POST request
+    const taskData = {
+      name: title,
+      description: description,
+      deadline: taskDeadline,
+      priority: priority,
+      colour: colour
+    }
 
-    document.getElementById('eventTaskList').appendChild(li);
+    fetch('/add_task', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(taskData),
+    })
+    .then(response => response.json())
 
-    //Console log for debugging
-    console.log('Task Added: ', li.textContent)
-
-    taskModal.style.display = "none";
-
-    this.reset();
+    .then(data => {
+      // On success, append the task to the task list
+      const li = document.createElement('li');
+      li.textContent = `${title}: Due ${new Date(taskDeadline).toLocaleString()}`;
+      document.getElementById('eventTaskList').appendChild(li);
+      taskModal.style.display = "none";
+      this.reset();
+    })
+    .catch(error => console.error('Error adding task:', error));
   });
 
   const viewButtons = document.querySelectorAll(".viewControls button");
