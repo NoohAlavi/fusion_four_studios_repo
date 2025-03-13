@@ -36,7 +36,12 @@ pip install flask
 ```
 
 ### 3. Run the demo in browser
-In terminal or command prompt, ensure you're in the root directory and run:
+**Windows:** Make sure you're in the root directory and run:
+``` 
+.\main.py
+```
+
+**MacOS/Linux:** Make sure you're in the root directory and run:
 ``` 
 ./main.py
 ```
