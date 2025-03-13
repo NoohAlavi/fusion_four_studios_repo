@@ -226,8 +226,8 @@ button[type="submit"] {
 
 .event-panel {
     width: 90%;
-    max-width: 350px; /* Ensures it stays within a reasonable size */
-    margin: 0 auto; /* Centers the panel */
+    max-width: 350px; 
+    margin: 0 auto; 
     padding: 30px 20px;
     background: white;
     text-align: center;
@@ -235,7 +235,7 @@ button[type="submit"] {
 }
 
 .event-panel button {
-    all: unset; /* Removes default button styles */
+    all: unset;  
     display: inline-block;
     padding: 10px 20px;
     border-radius: 5px;
