@@ -1,43 +1,55 @@
 # Event Horizon Calendar
-Built by: Fusion Five Studios
+Event Horizon Calendar is a calendar webapp that has the ability for users to add events or tasks to their calendar with core features "Task Prioritizer", "Cyber Housekeeper" and "File Reader". (currently in development)
 
-Event Horizon Calendar is a calendar app allowing users add task/event to their calendar with core features "Task prioritizer" and "Cyber housekeepe" (Both of them are still in development)
+## Environment requirement
+- Python3 
+- A web browser (Edge, Chrome, Firefox, etc)
 
-# Environment requirement
-    python3 
-    A web browser(IE,Chrome,Fox..etc)
+## Required package(s)
+- Flask
 
-# Required package(s)
-    Flask
+## Installation/Setup Instructions
+### 1. Environment Setup:
+- **Windows:** Press ```WIN+R``` and type in ```cmd``` to open Command Prompt.
 
-# Installation/Setup Instructions
-    1.Environment setup:
-    Windows users press *WIN + R* then type *cmd* to open Command Prompt.
-    Run:
-        winget install Python
+    Run the following command to install Python: 
+    ```
+    winget install Python
+    ```
+- **MacOS:** Press ```CMD + Space``` to open Spotlight Search, and type in ```Terminal```.
 
-    2. Install the required package
-    pip install flask
+    After opening the terminal, you can proceed to run:
+    ```
+    brew install python3
+    ```
+- **Linux:** For an Ubuntu/Debian based system, press ```CTRL+ALT+T``` to open terminal and run:
+    ```
+    sudo apt update
+    sudo apt install python3
+    ```
+ 
 
-    3.Run the demo in browser
-    Run *.\flask_testing.py* in the root directory
+### 2. Install the required package
+In terminal or command prompt, run:
+```
+pip install flask
+```
 
-## Contribution guideline:
+### 3. Run the demo in browser
+**Windows:** Make sure you're in the root directory in command prompt and run:
+``` 
+.\main.py
+```
 
-This section guides you through submitting your visualizations and findings. 
+**MacOS/Linux:** Make sure you're in the root directory in the terminal and run:
+``` 
+./main.py
+```
 
-You will need a README file with the description of your finding using the STAR model.
-
--Situation: Describe the situation and when it took place.
--Task: Explain the task and what was the goal.
--Action: Provide details about the action you took to attain this.
--Result: Conclude with the result of your action.
-Reference
-
-* You will need to provide the code in a notebook format (.ipynb file).
-
-
-Structure your notebook, you can use the STAR model too.
-Please try to follow as much as you can the PEP 8 coding style
-Have comments in your code explaining what the code block does
-Create a folder that contains the README file and the Python Notebook. The folder should be name like this "Project_Name_YourName"
+# Authors
+Built by: Fusion Five Studios 
+- Jonathan Lavoie 
+- Mason Cacheino 
+- Nooh Alavi
+- Rahif Haffeez
+- Shawn Xiao
