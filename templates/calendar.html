@@ -21,9 +21,9 @@
         <div class="calendar-panel">
             <div class="calendar">
                 <div class="controls">
-                    <button id="prevPeriod">⬅️</button>
+                    <button type="periodButton" id="prevPeriod">⬅️</button>
                     <div id="monthYear" class="month-year"></div>
-                    <button id="nextPeriod">➡️</button>
+                    <button type="periodButton" id="nextPeriod">➡️</button>
                 </div>
                 <div id="calendar-container"></div>
             </div>
@@ -41,7 +41,10 @@
             <h2>Events &amp; Tasks</h2>
             <button id="openEventModal">Add Event</button>
             <button id="openTaskModal">Add Task</button>
-            <ul id="eventTaskList"></ul>
+            <label id="eventListLabel">Events: </label>
+            <ul id="eventList"></ul>
+            <label id="tasksListLabel">Tasks: </label>
+            <ul id="taskList"></ul>
         </div>
     </div>
 

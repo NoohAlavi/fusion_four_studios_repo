@@ -95,6 +95,17 @@ def add_task():
     save_csv(TASKS_CSV, tasks)
     return jsonify({'status': 'success', 'task_id': task.id})
 
+#Route to get saved events
+@APP.route('/get_events', methods=['GET'])
+def get_events():
+    events = load_csv(EVENTS_CSV)
+    return jsonify({'events': events})
+
+#Route to get saved tasks
+@APP.route('/get_tasks', methods=['GET'])
+def get_tasks():
+    tasks = load_csv(TASKS_CSV)
+    return jsonify({'tasks' : tasks})
 
 @APP.route('/get_daily_task', methods=['GET'])
 def get_daily_events():

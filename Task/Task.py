@@ -28,15 +28,16 @@ class Task:
     def export_as_csv(self):
         """
         Return a list that canbe written as a single CSV row.
-        Tasks: [id, "Task", name, description, priority, deadline]
+        Tasks: [id, "Task", name, description, priority, deadline, colour]
         """
-        return [self.id, 
-                "Task",
-                self.name,
-                self.description,
-                self.priority,
-                self.deadline.strftime('%Y-%m-%dT%H:%M'),
-                self.colour
+        return [
+                self.id, #0
+                "Task", #1
+                self.name, #2
+                self.description, #3
+                self.priority, #4
+                self.deadline.strftime('%Y-%m-%dT%H:%M'), #5
+                self.colour #6
         ]
 
     def __str__(self):
@@ -54,20 +55,20 @@ class Event(Task):
     def export_as_csv(self):
         """
         Return a list that canbe written as a single CSV row.
-        Events: [id, "Event", name, description, location, priority, repeatability, start_datetime, end_datetime, colour]
+        Events: [id, "Event", name, description, priority, location, repeatability, start_datetime, end_datetime, colour]
         """
 
         return [
-            self.id,
-            "Event",
-            self.name,
-            self.description,
-            self.priority,
-            self.location,
-            self.repeatability,
-            self.start_datetime.strftime("%Y-%m-%dT%H:%M"),
-            self.end_datetime.strftime("%Y-%m-%dT%H:%M"),
-            self.colour
+            self.id, #0
+            "Event", #1
+            self.name, #2
+            self.description, #3
+            self.priority, #4
+            self.location, #5
+            self.repeatability, #6
+            self.start_datetime.strftime("%Y-%m-%dT%H:%M"), #7
+            self.end_datetime.strftime("%Y-%m-%dT%H:%M"), #8
+            self.colour #9
         ]
 
     def __str__(self):

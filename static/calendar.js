@@ -34,7 +34,7 @@ document.addEventListener('DOMContentLoaded', function () {
   function renderCalendar() {
     monthYearDisplay.textContent = `${months[viewDate.getMonth()]} ${viewDate.getFullYear()}`;
     calendarContainer.innerHTML = '';
-
+    fetchEventsAndTasks();
     if (currentView === "month") {
       renderMonthView(viewDate.getMonth(), viewDate.getFullYear());
     } else if (currentView === "week") {
@@ -42,6 +42,7 @@ document.addEventListener('DOMContentLoaded', function () {
     } else if (currentView === "day") {
       renderDayView();
     }
+
   }
 
   //Render the calendar in month view
@@ -234,10 +235,50 @@ document.addEventListener('DOMContentLoaded', function () {
     }
   });
 
+  //Grabs the csv data from the backend
+  async function fetchEventsAndTasks(){
+    try{
+      const eventsResponse = await fetch('get_events');
+      const tasksResponse = await fetch('/get_tasks');
+
+      const eventsData = await eventsResponse.json();
+      const tasksData = await tasksResponse.json();
+
+      renderEvents(eventsData.events.slice(1));
+      renderTasks(tasksData.tasks.slice(1));
+    }catch(error){
+      console.error('Error fetching event and tasks:', error);
+    }
+  }
+
+  //Render the events
+  function renderEvents(events){
+    const eventList = document.getElementById('eventList');
+    eventList.innerHTML = '';
+    
+    events.forEach(event => {
+      const li = document.createElement('li');
+      li.textContent = `${event[2]}: ${new Date(event[7]).toLocaleString()} - ${new Date(event[8]).toLocaleString()}`;
+      eventList.appendChild(li);
+    });
+  }
+
+  //Render the tasks
+  function renderTasks(tasks) {
+    const taskList = document.getElementById('taskList');
+    taskList.innerHTML = '';
+    
+    tasks.forEach(task => {
+      const li = document.createElement('li');
+      li.textContent = `${task[2]}: ${new Date(task[5]).toLocaleString()}`;
+      taskList.appendChild(li);
+    });
+  } 
+
   //Handle Event Submission
   document.getElementById('eventForm').addEventListener('submit', function (e) {
     e.preventDefault();
-
+  
     const title = document.getElementById('eventTitle').value;
     const notes = document.getElementById('eventNotes').value;
     const eventLocation = document.getElementById('location').value;
@@ -246,14 +287,13 @@ document.addEventListener('DOMContentLoaded', function () {
     const startTime = document.getElementById('startTime').value;
     const endTime = document.getElementById('endTime').value;
     const colour = document.getElementById('eventColour').value;
-
-
+  
     if (!title || !startTime || !endTime) {
       alert("Please fill in all fields for the event.");
       return;
     }
-
-    //Prepare data for the POST request
+  
+    // Prepare data for the POST request
     const eventData = {
       name: title,
       description: notes,
@@ -264,7 +304,7 @@ document.addEventListener('DOMContentLoaded', function () {
       end_datetime: endTime,
       colour: colour
     };
-
+  
     fetch('/add_event', {
       method: 'POST',
       headers: {
@@ -272,19 +312,15 @@ document.addEventListener('DOMContentLoaded', function () {
       },
       body: JSON.stringify(eventData),
     })
-    .then(response => response.json())
-    .then(data => {
-      //On success, append the event to the event list
+    .then(() => {
       const li = document.createElement('li');
       li.textContent = `${title}: ${new Date(startTime).toLocaleString()} - ${new Date(endTime).toLocaleString()}`;
-      document.getElementById('eventTaskList').appendChild(li);
+      document.getElementById('eventList').appendChild(li);
       eventModal.style.display = "none";
       this.reset();
-    }) //Send console for debugging
+    }) 
     .catch(error => console.error('Error adding event:', error));
-
-
-  });
+  });  
 
   //Handle Task Submission
   document.getElementById('taskForm').addEventListener('submit', function (e) {
@@ -319,11 +355,11 @@ document.addEventListener('DOMContentLoaded', function () {
     })
     .then(response => response.json())
 
-    .then(data => {
+    .then(() => {
       // On success, append the task to the task list
       const li = document.createElement('li');
       li.textContent = `${title}: Due ${new Date(taskDeadline).toLocaleString()}`;
-      document.getElementById('eventTaskList').appendChild(li);
+      document.getElementById('taskList').appendChild(li);
       taskModal.style.display = "none";
       this.reset();
     })
