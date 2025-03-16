@@ -11,6 +11,7 @@ body {
     background: wheat;
     margin: 0;
     padding: 0;
+    height: 100%
 }
 
 button {
@@ -26,7 +27,7 @@ button {
 
 /* Calendar Styles */
 .calendar {
-    max-width: 800px;
+    max-width: 1100px;
     margin: 20px auto;
     padding: 40px;
     background: white;
@@ -63,7 +64,7 @@ button {
 
 .day {
     text-align: center;
-    padding: 20px;
+    padding: 30px;
     background: #f8f8f8;
     border: 1px solid #ddd;
     font-size: 18px;
@@ -84,6 +85,7 @@ button {
     font-size: 1.5em;
     font-weight: bold;
     text-align: center;
+    margin-top: 5px;
     margin-bottom: 10px;
 }
 
@@ -92,14 +94,14 @@ button {
     flex-direction: column;
     border: 1px solid #ccc;
     width: 100%;
-    max-width: 400px;
+    max-width: 1000px;
     margin: auto;
 }
 
 .time-slot {
     display: flex;
     justify-content: space-between;
-    padding: 5px;
+    padding: 15px;
     border-bottom: 1px solid #ddd;
     background: #f9f9f9;
 }
@@ -141,7 +143,7 @@ button {
 
 .calendar-panel {
     flex: 1;
-    margin-left: -200px;
+    margin-right: 400px;
 }
 
 button[type=periodButton] {
@@ -151,18 +153,20 @@ button[type=periodButton] {
 }
 
 .event-panel {
-    height: 575px;
-    width: 90%;
-    max-width: 350px;
+    right: 0;
+    height: calc(100vh - 175px);
+    width: 350px;
     margin-top: 20px;
-    margin-right: 200px;
+    margin-right: 20px;
     padding: 30px 20px;
     background: white;
     text-align: center;
     box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    position: fixed;
 }
 
 .event-panel h2 {
+    font-size: 30px;
     text-align: center;
     margin-bottom: 10px;
 }
@@ -192,15 +196,43 @@ button[type=periodButton] {
     margin: 10px 0;
 }
 
-#eventListLabel {
-    margin-top: 10px;
-    display: block;
-    font-weight: bold;
-
+.eventSection,
+.taskSection {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
 }
 
-#tasksListLabel {
-    display: block;
+#eventList,
+#taskList {
+    flex-grow: 1;
+    overflow-y: auto;
+    margin: 0;
+    padding: 0;
+    margin-top: 10px;
+    list-style-type: none;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    max-height: 250px;
+}
+
+.taskSection {
+    margin-top: 30px;
+}
+
+#eventList li,
+#taskList li {
+    padding: 8px;
+    border-bottom: 1px solid #000000;
+}
+
+#eventList li:last-child,
+#taskList li:last-child {
+    border-bottom: none;
+}
+
+label {
+    font-size: 20px;
     font-weight: bold;
 }
 
