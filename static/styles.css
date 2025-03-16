@@ -231,7 +231,7 @@ button[type=periodButton] {
     border-bottom: none;
 }
 
-label {
+#etPanelLabel {
     font-size: 20px;
     font-weight: bold;
 }
