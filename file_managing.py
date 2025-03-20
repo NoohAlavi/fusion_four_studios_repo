@@ -12,7 +12,7 @@ import docx
 ALLOWED_EXTENSIONS = {'pdf', 'docx', 'txt'}
 FILLER_WORDS = {
     'the', 'a', 'an', 'in', 'on', 'at', 'as', 'to', 'and', 
-    'for', 'but', 'with', 'of', 'by', 'is', 'it', 'this', 'that'
+    'for', 'but', 'with', 'of', 'by', 'is', 'it', 'this', 'that', 'you', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', 'I'
 }
 
 def load_csv(filename: str):

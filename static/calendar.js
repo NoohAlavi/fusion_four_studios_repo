@@ -335,15 +335,15 @@ document.addEventListener('DOMContentLoaded', function () {
       eventContainer.style.alignItems = 'center';
   
       const delBtn = document.createElement('div');
-      delBtn.textContent = '❌';
+      delBtn.textContent = '🗑️';
       delBtn.style.marginRight = '8px';
       delBtn.style.marginLeft = '4px';
       delBtn.style.cursor = 'pointer';
-      
+
       delBtn.id = event[0]; // Gets the ID of the event, so that it can be modified/deleted later on
   
       const optionsBtn = document.createElement('div');
-      optionsBtn.textContent = '⚙️';
+      optionsBtn.textContent = '✏️';
       optionsBtn.style.marginRight = '8px';
       optionsBtn.style.cursor = 'pointer';
   
@@ -371,7 +371,7 @@ document.addEventListener('DOMContentLoaded', function () {
       taskContainer.style.alignItems = 'center';
   
       const delBtn = document.createElement('div');
-      delBtn.textContent = '❌';
+      delBtn.textContent = '🗑️';
       delBtn.style.marginRight = '8px';
       delBtn.style.marginLeft = '4px';
       delBtn.style.cursor = 'pointer';
@@ -379,7 +379,7 @@ document.addEventListener('DOMContentLoaded', function () {
       delBtn.id = task[0]; // Gets the ID of the event, so that it can be modified/deleted later on
 
       const optionsBtn = document.createElement('div');
-      optionsBtn.textContent = '⚙️';
+      optionsBtn.textContent = '✏️';
       optionsBtn.style.marginRight = '8px';
       optionsBtn.style.cursor = 'pointer';
   
