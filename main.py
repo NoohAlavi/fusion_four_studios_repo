@@ -171,7 +171,7 @@ def upload_file():
                 "location": "",
                 "start_datetime": start_datetime,
                 "end_datetime": end_datetime,
-                "repeatability": "none",
+                "repeatability": "Once",
                 "priority": "2",
                 "colour": "#FF0000",
             }
