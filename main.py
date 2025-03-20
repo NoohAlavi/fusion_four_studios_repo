@@ -82,14 +82,14 @@ def index():
     return flask.render_template('calendar.html')
 
 
-@APP.route('/remove_event', methods=['GET'])
+@APP.route('/remove_event', methods=['POST'])
 def remove_event():
     """
     Takes id from button, deletes event with id then updates events.csv
     """
-    id = request.args.get("id")
+    id = request.get_json()["id"]
     events = load_csv(EVENTS_CSV)
-    print(events)
+    print(events, id)
     events = list(filter(lambda e: e[0] != id, events))
     print(events)
     save_csv(EVENTS_CSV, events)
@@ -100,7 +100,7 @@ def remove_task():
     """
     Takes id from button, deletes task with id then updates tasks.csv
     """
-    id = int(request.args.get("id"))
+    id = request.get_json()["id"]
     tasks = load_csv(TASKS_CSV)
     print(tasks)
     tasks = list(filter(lambda e: e[0] != id, tasks))
