@@ -341,6 +341,21 @@ document.addEventListener('DOMContentLoaded', function () {
       delBtn.style.cursor = 'pointer';
 
       delBtn.id = event[0]; // Gets the ID of the event, so that it can be modified/deleted later on
+      delBtn.addEventListener('click', () => {
+
+        const id = delBtn.id;
+        fetch('/delete_event', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({id}),
+        })
+        .then(() => {
+          eventContainer.remove();
+        })
+        .catch(error => console.error('Error deleting event:', error));
+      });
   
       const optionsBtn = document.createElement('div');
       optionsBtn.textContent = '✏️';
