@@ -347,6 +347,7 @@ document.addEventListener('DOMContentLoaded', function () {
   
       const li = document.createElement('li');
       li.textContent = `${event[2]}: ${new Date(event[7]).toLocaleString()} - ${new Date(event[8]).toLocaleString()}`;
+      li.id = event[0]; // Gets the ID of the event, so that it can be modified/deleted later on
       li.style.listStyle = 'none';
   
       eventContainer.appendChild(delBtn);
@@ -381,6 +382,7 @@ document.addEventListener('DOMContentLoaded', function () {
   
       const li = document.createElement('li');
       li.textContent = `${task[2]}: ${new Date(task[5]).toLocaleString()}`;
+      li.id = task[0]; // Gets the ID of the task, so that it can be modified/deleted later on
       li.style.listStyle = 'none';
   
       taskContainer.appendChild(delBtn);
