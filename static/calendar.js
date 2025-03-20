@@ -344,7 +344,7 @@ document.addEventListener('DOMContentLoaded', function () {
       delBtn.addEventListener('click', () => {
 
         const id = delBtn.id;
-        fetch('/delete_event', {
+        fetch('/remove_event', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
