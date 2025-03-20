@@ -101,7 +101,7 @@ button {
 .time-slot {
     display: flex;
     justify-content: space-between;
-    padding: 15px;
+    padding: 10px;
     border-bottom: 1px solid #ddd;
     background: #f9f9f9;
 }

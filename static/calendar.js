@@ -28,6 +28,10 @@ document.addEventListener('DOMContentLoaded', function () {
   const openTaskModalBtn = document.getElementById("openTaskModal");
   const closeButtons = document.querySelectorAll(".modal .close");
 
+  //Elements for file upload
+  const eventFileInput = document.getElementById('eventFile');
+  const taskFileInput = document.getElementById('taskFile');
+
   //Calendar rendering logic
 
   //Main function to render calendar based on the current view
@@ -234,6 +238,75 @@ document.addEventListener('DOMContentLoaded', function () {
       taskModal.style.display = "none";
     }
   });
+
+  //Handle file upload for Event
+  eventFileInput.addEventListener('change', function (e) {
+    const file = e.target.files[0];
+    if (file) {
+      const formData = new FormData();
+      formData.append('file', file);
+      formData.append('upload_type', 'event'); 
+      
+      fetch('/upload_file', {
+        method: 'POST',
+        body: formData
+      })
+      .then(response => response.json())
+      .then(data => {
+        if (data.status === 'success') {
+          fillEventFormWithExtractedData(data.data);
+        } else {
+          alert(`Error: ${data.message}`);
+        }
+      })
+      .catch(error => console.error('Error uploading file:', error));
+    }
+  });
+
+  //Handle file upload for Task
+  taskFileInput.addEventListener('change', function (e) {
+    const file = e.target.files[0];
+    if (file) {
+      const formData = new FormData();
+      formData.append('file', file);
+      formData.append('upload_type', 'task'); 
+      
+      fetch('/upload_file', {
+        method: 'POST',
+        body: formData
+      })
+      .then(response => response.json())
+      .then(data => {
+        if (data.status === 'success') {
+          fillTaskFormWithExtractedData(data.data);
+        } else {
+          alert(`Error: ${data.message}`);
+        }
+      })
+      .catch(error => console.error('Error uploading file:', error));
+    }
+  });
+
+  //FIll event form with extarcted data
+  function fillEventFormWithExtractedData(data) {
+    document.getElementById('eventTitle').value = data.name || '';
+    document.getElementById('eventNotes').value = data.description || '';
+    document.getElementById('location').value = data.location || '';
+    document.getElementById('startTime').value = data.start_datetime || '';
+    document.getElementById('endTime').value = data.end_datetime || '';
+    document.getElementById('eventPriority').value = data.priority || '2';  // Default: Medium
+    document.getElementById('repeat').value = data.repeatability || 'none';  // Default: none
+    document.getElementById('eventColour').value = data.colour || '#0000FF';  // Default: Blue
+  }
+
+  //Fill task form with extracted data
+  function fillTaskFormWithExtractedData(data) {
+    document.getElementById('taskTitle').value = data.name || '';
+    document.getElementById('taskNotes').value = data.description || '';
+    document.getElementById('deadline').value = data.deadline || '';
+    document.getElementById('taskPriority').value = data.priority || '2';  // Default: Medium
+    document.getElementById('taskColour').value = data.colour || '#0000FF';  // Default: Blue
+  }
 
   //Grabs the csv data from the backend
   async function fetchEventsAndTasks(){

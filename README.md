@@ -1,12 +1,14 @@
 # Event Horizon Calendar
 Event Horizon Calendar is a calendar webapp that has the ability for users to add events or tasks to their calendar with core features "Task Prioritizer", "Cyber Housekeeper" and "File Reader". (currently in development)
 
-## Environment requirement
-- Python3 
+## Environment requirements
+- Python 3.8.x
 - A web browser (Edge, Chrome, Firefox, etc)
 
-## Required package(s)
+## Required packages
 - Flask
+- Python-Docx
+- PyPDF2
 
 ## Installation/Setup Instructions
 ### 1. Environment Setup:
@@ -29,10 +31,10 @@ Event Horizon Calendar is a calendar webapp that has the ability for users to ad
     ```
  
 
-### 2. Install the required package
-In terminal or command prompt, run:
+### 2. Install the required packages
+In terminal or command prompt, go into the root directory of the application and run:
 ```
-pip install flask
+pip install -r requirements.txt
 ```
 
 ### 3. Run the demo in browser
