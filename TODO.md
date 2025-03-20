@@ -8,3 +8,6 @@
 - Allow the options to download/upload the .csv files.
 - Change the month switcher to a drop-down
 - Make sure the delete and options buttons are working.
+## LOW-PRIORITY
+- Add Fusion Five logo on the website
+  - Add our names
