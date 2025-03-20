@@ -392,6 +392,21 @@ document.addEventListener('DOMContentLoaded', function () {
       delBtn.style.cursor = 'pointer';
       
       delBtn.id = task[0]; // Gets the ID of the event, so that it can be modified/deleted later on
+      delBtn.addEventListener('click', () => {
+
+        const id = delBtn.id;
+        fetch('/remove_task', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({id}),
+        })
+        .then(() => {
+          taskContainer.remove();
+        })
+        .catch(error => console.error('Error deleting task:', error));
+      });
 
       const optionsBtn = document.createElement('div');
       optionsBtn.textContent = '✏️';
