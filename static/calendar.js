@@ -330,10 +330,32 @@ document.addEventListener('DOMContentLoaded', function () {
     eventList.innerHTML = '';
     
     events.forEach(event => {
+      const eventContainer = document.createElement('div');
+      eventContainer.style.display = 'flex';
+      eventContainer.style.alignItems = 'center';
+  
+      const delBtn = document.createElement('div');
+      delBtn.textContent = '❌';
+      delBtn.style.marginRight = '8px';
+      delBtn.style.marginLeft = '4px';
+      delBtn.style.cursor = 'pointer';
+  
+      const optionsBtn = document.createElement('div');
+      optionsBtn.textContent = '⚙️';
+      optionsBtn.style.marginRight = '8px';
+      optionsBtn.style.cursor = 'pointer';
+  
       const li = document.createElement('li');
       li.textContent = `${event[2]}: ${new Date(event[7]).toLocaleString()} - ${new Date(event[8]).toLocaleString()}`;
-      eventList.appendChild(li);
-    });
+      li.style.listStyle = 'none';
+  
+      eventContainer.appendChild(delBtn);
+      eventContainer.appendChild(optionsBtn);
+      eventContainer.appendChild(li);
+  
+      eventList.appendChild(eventContainer);
+  });
+  
   }
 
   //Render the tasks
@@ -342,10 +364,32 @@ document.addEventListener('DOMContentLoaded', function () {
     taskList.innerHTML = '';
     
     tasks.forEach(task => {
+      const taskContainer = document.createElement('div');
+      taskContainer.style.display = 'flex';
+      taskContainer.style.alignItems = 'center';
+  
+      const delBtn = document.createElement('div');
+      delBtn.textContent = '❌';
+      delBtn.style.marginRight = '8px';
+      delBtn.style.marginLeft = '4px';
+      delBtn.style.cursor = 'pointer';
+
+      const optionsBtn = document.createElement('div');
+      optionsBtn.textContent = '⚙️';
+      optionsBtn.style.marginRight = '8px';
+      optionsBtn.style.cursor = 'pointer';
+  
       const li = document.createElement('li');
       li.textContent = `${task[2]}: ${new Date(task[5]).toLocaleString()}`;
-      taskList.appendChild(li);
-    });
+      li.style.listStyle = 'none';
+  
+      taskContainer.appendChild(delBtn);
+      taskContainer.appendChild(optionsBtn);
+      taskContainer.appendChild(li);
+  
+      taskList.appendChild(taskContainer);
+  });
+  
   } 
 
   //Handle Event Submission
