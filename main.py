@@ -81,6 +81,36 @@ def create_task_from_data(data):
 def index():
     return flask.render_template('calendar.html')
 
+<<<<<<< Updated upstream
+=======
+@APP.route('/remove_event', methods=['GET'])
+def remove_event():
+    """
+    Takes id from button, deletes event with id then updates events.csv
+    """
+    id = request.args.get("id")
+    events = load_csv(EVENTS_CSV)
+    print(events)
+    events = list(filter(lambda e: e[0] != id, events))
+    print(events)
+    save_csv(EVENTS_CSV, events)
+    return jsonify({'status': 'success', 'event_removed': id})
+    
+@APP.route('/remove_task', methods=['POST'])
+def remove_task():
+    """
+    Takes id from button, deletes task with id then updates tasks.csv
+    """
+    id = int(request.args.get("id"))
+    tasks = load_csv(TASKS_CSV)
+    print(tasks)
+    tasks = list(filter(lambda e: e[0] != id, tasks))
+    print(tasks)
+    save_csv(TASKS_CSV, tasks)
+    return jsonify({'status': 'success', 'task_removed': id})
+
+
+>>>>>>> Stashed changes
 #Route to add an event
 @APP.route('/add_event', methods=['POST'])
 def add_event():
