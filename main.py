@@ -81,8 +81,7 @@ def create_task_from_data(data):
 def index():
     return flask.render_template('calendar.html')
 
-<<<<<<< Updated upstream
-=======
+
 @APP.route('/remove_event', methods=['GET'])
 def remove_event():
     """
@@ -110,7 +109,6 @@ def remove_task():
     return jsonify({'status': 'success', 'task_removed': id})
 
 
->>>>>>> Stashed changes
 #Route to add an event
 @APP.route('/add_event', methods=['POST'])
 def add_event():
