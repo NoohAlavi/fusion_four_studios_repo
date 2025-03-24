@@ -1,7 +1,7 @@
 #Authors: Johathan Lavoie, Mason Cacheino, Nooh Alavi, Rahif Haffeez, Shawn Xiao
 #Date: February 6th, 2025
 #Filename: file_managing.py
-#Description: The file handles file I/O operations for reading and writing task and event data to CSV files. As well as loading and saving events in the ICS format.
+#Description: This file handles, I/O for CSV and ICS files. It also handles the uploaded file input when creating/editing an event/task.
 
 from csv import reader, writer
 import re
@@ -9,12 +9,14 @@ from collections import Counter
 import PyPDF2
 import docx
 
+#Variable setup
 ALLOWED_EXTENSIONS = {'pdf', 'docx', 'txt'}
 FILLER_WORDS = {
     'the', 'a', 'an', 'in', 'on', 'at', 'as', 'to', 'and', 
-    'for', 'but', 'with', 'of', 'by', 'is', 'it', 'this', 'that', 'you', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', 'I'
+    'for', 'but', 'with', 'of', 'by', 'is', 'it', 'this', 'that', 'you', 'I'
 }
 
+#CSV FUNCTIONS
 def load_csv(filename: str):
     """
     Loads either the task or event CSV
@@ -30,6 +32,7 @@ def save_csv(filename: str, data: list):
         writer(file).writerows(data)
 
 ###need to update these 
+#ICS FUNCTIONS
 def load_ics(filename: str):
     with open(filename, 'r') as file:
         data = []
@@ -60,6 +63,7 @@ def save_ics(filename: str, data: list):
             file.write('END:VEVENT\n')
         file.write('END:VCALENDAR\n')
 
+#UPLOADED FILE FUNCTIONS
 def allowed_file(filename):
     """
     Check to see if the file is an acceptable format from its extension.
@@ -90,7 +94,7 @@ def extract_text_from_docx(filepath: str) -> str:
 def extract_text_from_text(filepath:str) -> str:
     """
     Extract text content from a TXT file.
-    """
+    """ 
     with open(filepath, 'r', encoding='utf-8') as f:
         return f.read()
 
@@ -98,6 +102,6 @@ def count_keywords(text: str) -> dict:
     """
     Count keywords in the text while ignoring common filler words.
     """
-    words = re.findall(r'\b\w+\b', text.lower())
+    words = re.findall(r'\b[a-zA-Z]+\b', text.lower())
     filtered = [w for w in words if w not in FILLER_WORDS]
     return dict(Counter(filtered))

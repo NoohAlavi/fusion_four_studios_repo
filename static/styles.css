@@ -146,10 +146,40 @@ button {
     margin-right: 400px;
 }
 
-button[type=periodButton] {
+.periodButton {
     border: ridge;
     width: 50px;
     height: 30px;
+}
+
+.viewControls button {
+    padding: 10px;
+    border: none;
+    cursor: pointer;
+    background-color: lightgray;
+}
+
+.viewControls button:hover {
+    background: rgb(200,200,200);
+    transition: all 0.2s;
+}
+
+.viewControls button:not(#save-day).active {
+    background-color: #007bff !important;
+    color: white !important;
+    font-weight: bold !important;
+}
+
+#start-of-week-dropdown {
+    margin-left: 15px;
+}
+
+#save-day {
+    margin-left: 5px;
+}
+
+#save-day:active {
+    background: rgb(170,170,170)
 }
 
 .event-panel {
@@ -290,17 +320,4 @@ button[type="submit"] {
     padding: 5px;
     margin-top: 5px;
     box-sizing: border-box;
-}
-
-.viewControls button {
-    padding: 10px;
-    border: none;
-    cursor: pointer;
-    background-color: lightgray;
-}
-
-.viewControls button.active {
-    background-color: #007bff !important;
-    color: white !important;
-    font-weight: bold !important;
 }

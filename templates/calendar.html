@@ -21,9 +21,9 @@
         <div class="calendar-panel">
             <div class="calendar">
                 <div class="controls">
-                    <button type="periodButton" id="prevPeriod">⬅️</button>
+                    <button class="periodButton" id="prevPeriod">⬅️</button>
                     <div id="monthYear" class="month-year"></div>
-                    <button type="periodButton" id="nextPeriod">➡️</button>
+                    <button class="periodButton" id="nextPeriod">➡️</button>
                 </div>
                 <div id="calendar-container"></div>
             </div>
@@ -32,9 +32,23 @@
                     <button id="monthView">Month</button>
                     <button id="weekView">Week</button>
                     <button id="dayView">Day</button>
+
+                    <select id="start-of-week-dropdown">
+                        <option value="Sun">Sunday</option>
+                        <option value="Mon">Monday</option>
+                        <option value="Tue">Tuesday</option>
+                        <option value="Wed">Wednesday</option>
+                        <option value="Thu">Thursday</option>
+                        <option value="Fri">Friday</option>
+                        <option value="Sat">Saturday</option>
+                    </select>
+                    
+                    <button class="saveDay" id="save-day">Save</button>
                 </div>
             </div>
         </div>
+
+        
 
         <!-- Right: Event/Task Panel -->
         <div class="event-panel">
@@ -60,6 +74,8 @@
             <span class="close">&times;</span>
             <form id="eventForm">
                 <h3>Add Event</h3>
+                <input type="hidden" id="eventId" name="eventId" value="">
+                
                 <label for="eventTitle">Title:</label>
                 <input type="text" id="eventTitle" required>
                 
@@ -95,7 +111,7 @@
                 <label for="file">Upload File: </label>
                 <input type="file" id="eventFile" accept=".pdf,.docx,.txt"><br>
 
-                <button type="submit">Add Event</button>
+                <button type="submit">Submit</button>
             </form>
         </div>
     </div>
@@ -106,6 +122,8 @@
             <span class="close">&times;</span>
             <form id="taskForm">
                 <h3>Add Task</h3>
+                <input type="hidden" id="taskId" name="taskId" value="">
+                
                 <label for="taskTitle">Title:</label>
                 <input type="text" id="taskTitle" required>
 
@@ -128,8 +146,16 @@
                 <label for="file">Upload File: </label>
                 <input type="file" id="taskFile" accept=".pdf,.docx,.txt"><br>
 
-                <button type="submit">Add Task</button>
+                <button type="submit">Submit</button>
             </form>
+        </div>
+    </div>
+
+    <!-- Info Modal -->
+    <div id="infoModal" class="modal" style="display:none;">
+        <div class="modal-content">
+        <span id="infoClose" class="close">&times;</span>
+        <div id="infoContent"></div>
         </div>
     </div>
 
