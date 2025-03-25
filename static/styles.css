@@ -164,7 +164,7 @@ button {
     transition: all 0.2s;
 }
 
-.viewControls button:not(#save-day).active {
+.viewControls button:not(#save-day, #goToDate).active {
     background-color: #007bff !important;
     color: white !important;
     font-weight: bold !important;
@@ -178,7 +178,15 @@ button {
     margin-left: 5px;
 }
 
-#save-day:active {
+#datePicker {
+    margin-left: 15px;
+}
+
+#goToDate {
+    margin-left: 5px;
+}
+
+#save-day:active, #goToDate:active{
     background: rgb(170,170,170)
 }
 
@@ -224,6 +232,11 @@ button {
 .event-panel button {
     width: 50%;
     margin: 10px 0;
+}
+
+#searchBar {
+    padding: 10px;
+    font-size: 17px;
 }
 
 .eventSection,

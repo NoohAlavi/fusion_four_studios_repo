@@ -19,9 +19,16 @@ document.addEventListener('DOMContentLoaded', function () {
   const prevPeriodButton = document.getElementById('prevPeriod');
   const nextPeriodButton = document.getElementById('nextPeriod');
   const calendarContainer = document.getElementById('calendar-container');
-  const dropdown = document.getElementById("start-of-week-dropdown");
+  const dayDropdown = document.getElementById("start-of-week-dropdown");
   const saveButton = document.getElementById("save-day")
 
+  //Elements for event panel
+  const confirmDateButton = document.getElementById('goToDate');
+  const datePicker = document.getElementById('datePicker');
+  const searchBar = document.getElementById("searchBar");
+  const eventList = document.getElementById("eventList");
+  const taskList = document.getElementById("taskList");
+  
   //Elements for task and event modals.
   const eventModal = document.getElementById("eventModal");
   const taskModal = document.getElementById("taskModal");
@@ -40,7 +47,7 @@ document.addEventListener('DOMContentLoaded', function () {
     calendarContainer.innerHTML = '';
     fetchEventsAndTasks();
 
-    const startOfWeek = dropdown.value;
+    const startOfWeek = dayDropdown.value;
     console.log(days.indexOf(startOfWeek))
     const startDayIndex = days.indexOf(startOfWeek);
 
@@ -55,11 +62,11 @@ document.addEventListener('DOMContentLoaded', function () {
 
   //Grab current start of the week from data
   fetch('/get_start_of_week')
-        .then(response => response.json())
-        .then(data => {
-            dropdown.value = data.startOfWeek;
-            renderCalendar();
-        });
+    .then(response => response.json())
+    .then(data => {
+      dayDropdown.value = data.startOfWeek;
+      renderCalendar();
+    });
 
   //Render the calendar in month view
   function renderMonthView(month, year, startDayIndex) {
@@ -233,28 +240,41 @@ document.addEventListener('DOMContentLoaded', function () {
   renderCalendar();
 
   //Whenever the dropdown changes, update the calendar.
-  dropdown.addEventListener('change', function () {
+  dayDropdown.addEventListener('change', function () {
     renderCalendar();
+  });
+
+  //Switch calendar to selected date
+  confirmDateButton.addEventListener('click', function () {
+    const selectedDate = datePicker.value;
+    if (selectedDate) {
+      viewDate = new Date(selectedDate);
+      renderCalendar();
+    } else {
+      alert("Make sure to fill out the date.")
+    }
   });
 
   //Save the day to the config file
   saveButton.addEventListener('click', () => {
-    const selectedDay = dropdown.value;
+    const selectedDay = dayDropdown.value;
 
     fetch('/save_start_of_week', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ startOfWeek: selectedDay })
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ startOfWeek: selectedDay })
     })
-    .then(response => response.json(), renderCalendar)
-    .catch(error => {
+      .then(response => response.json(), renderCalendar)
+      .catch(error => {
         console.error('Error:', error);
         alert('Failed to save start of the week');
-    });
-});
+      });
+  });
 
+  //Event/Task Panel 
+  
   //Event Modal
   openEventModalBtn.addEventListener("click", function () {
     eventModal.style.display = "block";
@@ -340,7 +360,7 @@ document.addEventListener('DOMContentLoaded', function () {
     document.getElementById('repeat').value = data.repeatability || 'none';
     document.getElementById('eventColour').value = data.colour || '#0000FF';
   }
-  
+
   //Fill task form with extracted data
   function fillTaskFormWithExtractedData(data) {
     document.getElementById('taskId').value = data.id || '';
@@ -349,7 +369,7 @@ document.addEventListener('DOMContentLoaded', function () {
     document.getElementById('deadline').value = data.deadline || '';
     document.getElementById('taskPriority').value = data.priority || '2';
     document.getElementById('taskColour').value = data.colour || '#0000FF';
-  }  
+  }
 
   //Grabs the csv data from the backend
   async function fetchEventsAndTasks() {
@@ -370,7 +390,7 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
   //Create the buttons for events/tasks
-  function createButton(icon, marginRight, marginLeft, onClick){
+  function createButton(icon, marginRight, marginLeft, onClick) {
     const btn = document.createElement('div');
     btn.textContent = icon;
     btn.style.marginRight = `${marginRight}px`;
@@ -393,15 +413,15 @@ document.addEventListener('DOMContentLoaded', function () {
       //Delete Button
       const delBtn = createButton('🗑️', 8, 4, () => {
         if (confirm('Are you sure you want to delete this event?')) {
-            fetch('/remove_event', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ id: event[0] }),
-            })
+          fetch('/remove_event', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ id: event[0] }),
+          })
             .then(() => eventContainer.remove())
             .catch(error => console.error('Error deleting event:', error));
         }
-     });
+      });
 
       //Edit Button
       const editBtn = createButton('✏️', 8, 0, () => {
@@ -425,11 +445,11 @@ document.addEventListener('DOMContentLoaded', function () {
         let descriptionHTML = event[3] ? `<p><strong>Description:</strong> ${event[3]}</p>` : "";
         let priorityText = "Unknown";
         if (event[4] === "1") {
-            priorityText = "Low";
+          priorityText = "Low";
         } else if (event[4] === "2") {
-            priorityText = "Medium";
+          priorityText = "Medium";
         } else if (event[4] === "3") {
-            priorityText = "High";
+          priorityText = "High";
         }
         document.getElementById('infoContent').innerHTML = `
           <h3>${event[2]}</h3>
@@ -467,11 +487,11 @@ document.addEventListener('DOMContentLoaded', function () {
       //Delete Button
       const delBtn = createButton('🗑️', 8, 4, () => {
         if (confirm('Are you sure you want to delete this task?')) {
-            fetch('/remove_task', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ id: task[0] }),
-            })
+          fetch('/remove_task', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ id: task[0] }),
+          })
             .then(() => taskContainer.remove())
             .catch(error => console.error('Error deleting task:', error));
         }
@@ -491,15 +511,15 @@ document.addEventListener('DOMContentLoaded', function () {
       });
 
       //Info Button
-      const infoBtn = createButton('ℹ️', 8, 0, () => { 
+      const infoBtn = createButton('ℹ️', 8, 0, () => {
         let descriptionHTML = task[3] ? `<p><strong>Description:</strong> ${task[3]}</p>` : "";
         let priorityText = "Unknown";
         if (task[4] === "1") {
-            priorityText = "Low";
+          priorityText = "Low";
         } else if (task[4] === "2") {
-            priorityText = "Medium";
+          priorityText = "Medium";
         } else if (task[4] === "3") {
-            priorityText = "High";
+          priorityText = "High";
         }
 
         document.getElementById('infoContent').innerHTML = `
@@ -534,6 +554,28 @@ document.addEventListener('DOMContentLoaded', function () {
     if (event.target === infoModal) {
       infoModal.style.display = 'none';
     }
+  });
+
+  //Takes input of
+  searchBar.addEventListener("input", function () {
+    const query = searchBar.value.toLowerCase().trim();
+
+    function filterContainers(containers) {
+      Array.from(containers).forEach(container => {
+        const text = container.textContent.toLowerCase();
+        if (text.includes(query)) {
+          container.style.display = "flex";
+        } else {
+          container.style.display = "none";
+        }
+      });
+    }
+
+    const eventContainers = eventList.children;
+    const taskContainers = taskList.children;
+
+    filterContainers(eventContainers, "event");
+    filterContainers(taskContainers, "task");
   });
 
   //Handle Event Submission
