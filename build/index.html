@@ -1,0 +1,178 @@
+    <!-- 
+    Authors: Johathan Lavoie, Mason Cacheino, Nooh Alavi, Rahif Haffeez, Shawn Xiao
+    Date: February 6th, 2025
+    Filename: calendar.html
+    Description: Contains the front-end code for the calendar. It is the HTML template rendered by Flask, provides the front-end structure and layout.
+    -->
+    
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Event Horizon Calendar</title>
+        <link rel="stylesheet" href="/static/styles.css">
+        <link rel="icon" type="image/png" href="/static/icon.png">
+    </head>
+    <body>
+        <div style="display: flex; align-items: center; justify-content: center; text-align: center; position: relative; margin: 30px 0;">
+            <img src="/static/icon.png" alt="Event Horizon Calendar Logo" style="width: 100px; height: 100px; position: absolute; left: 0; margin-top: 20px; margin-bottom: 20px;">
+            <h1 class="title" style="margin: 0; flex-grow: 1;">Event Horizon Calendar</h1>
+        </div>
+        <div class="main-container">
+
+            <!-- Left: Calendar Panel -->
+            <div class="calendar-panel">
+                <div class="calendar">
+                    <div class="controls">
+                        <button class="periodButton" id="prevPeriod">⬅️</button>
+                        <div id="monthYear" class="month-year"></div>
+                        <button class="periodButton" id="nextPeriod">➡️</button>
+                    </div>
+                    <div id="calendar-container"></div>
+                    <div id="prioritizedTaskContainer" style="display: none;">
+                        <button id="taskPriortizerBtn">Task Prioritizer</button>
+                        <ul id="prioritizedTaskList"></ul>
+                    </div>
+                </div>
+                <div class="view-toggle">
+                    <div class="viewControls">
+                        <button id="monthView">Month</button>
+                        <button id="weekView">Week</button>
+                        <button id="dayView">Day</button>
+
+                        <select id="start-of-week-dropdown">
+                            <option value="Sun">Sunday</option>
+                            <option value="Mon">Monday</option>
+                            <option value="Tue">Tuesday</option>
+                            <option value="Wed">Wednesday</option>
+                            <option value="Thu">Thursday</option>
+                            <option value="Fri">Friday</option>
+                            <option value="Sat">Saturday</option>
+                        </select>
+                        <button class="saveDay" id="save-day">Save</button>
+
+                        <input type="date" id="datePicker">
+                        <button id="goToDate">Go</button>
+                    </div>
+                </div>
+            </div>
+
+            
+
+            <!-- Right: Event/Task Panel -->
+            <div class="event-panel">
+                <h2>Events &amp; Tasks</h2>
+                <button id="openEventModal">Add Event</button>
+                <button id="openTaskModal">Add Task</button>
+                <input type="text" id="searchBar" placeholder="Search..." />
+                <div id="panelList">
+                    <div class="eventSection">
+                        <label id="etPanelLabel">Events: </label>
+                        <ul id="eventList"></ul>
+                    </div>
+                    <div class="taskSection">
+                        <label id="etPanelLabel">Tasks: </label>
+                        <ul id="taskList"></ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal for Adding an Event -->
+        <div id="eventModal" class="modal">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <form id="eventForm">
+                    <h3>Add Event</h3>
+                    <input type="hidden" id="eventId" name="eventId" value="">
+                    
+                    <label for="eventTitle">Title:</label>
+                    <input type="text" id="eventTitle" required>
+                    
+                    <label for="eventNotes">Notes:</label>
+                    <input type="text" id="eventNotes">
+
+                    <label for="startTime">Start Time:</label>
+                    <input type="datetime-local" id="startTime" required>
+
+                    <label for="endTime">End Time:</label>
+                    <input type="datetime-local" id="endTime" required>
+
+                    <label for="location">Location:</label>
+                    <input type="text" id="location">
+
+                    <label for="eventPriority">Priority:</label>
+                    <select id="eventPriority">
+                        <option value="1">Low</option>
+                        <option value="2" selected>Medium</option>
+                        <option value="3">High</option>
+                    </select>
+
+                    <label for="repeat">Repeat:</label>
+                    <select id="repeat">
+                        <option value="once" selected>Once</option>
+                        <option value="weekly">Weekly</option>
+                        <option value="monthly">Monthly</option>
+                        <option value="yearly">Yearly</option>
+                    </select>
+
+                    <label for="eventColour">Colour:</label>
+                    <input type="color" id="eventColour" value="#ff0000">
+
+                    <label for="file">Upload File: </label>
+                    <input type="file" id="eventFile" accept=".pdf,.docx,.txt"><br>
+
+                    <button type="submit">Submit</button>
+                </form>
+                <div id="eventErrorMessages"></div>
+            </div>
+        </div>
+
+        <!-- Modal for Adding a Task -->
+        <div id="taskModal" class="modal">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <form id="taskForm">
+                    <h3>Add Task</h3>
+                    <input type="hidden" id="taskId" name="taskId" value="">
+                    
+                    <label for="taskTitle">Title:</label>
+                    <input type="text" id="taskTitle" required>
+
+                    <label for="taskNotes">Notes: </label>
+                    <input type="text" id="taskNotes">
+
+                    <label for="deadline">Deadline:</label>
+                    <input type="datetime-local" id="deadline" required>
+
+                    <label for="taskPriority">Priority:</label>
+                    <select id="taskPriority">
+                        <option value="1">Low</option>
+                        <option value="2" selected>Medium</option>
+                        <option value="3">High</option>
+                    </select>
+
+                    <label for="taskColour">Colour:</label>
+                    <input type="color" id="taskColour" value="#0000ff">
+                    
+                    <label for="file">Upload File: </label>
+                    <input type="file" id="taskFile" accept=".pdf,.docx,.txt"><br>
+
+                    <button type="submit">Submit</button>
+                </form>
+                <div id="taskErrorMessages"></div>
+            </div>
+        </div>
+
+        <!-- Info Modal -->
+        <div id="infoModal" class="modal" style="display:none;">
+            <div class="modal-content">
+            <span id="infoClose" class="close">&times;</span>
+            <div id="infoContent"></div>
+            </div>
+        </div>
+
+        <script src="/static/calendar.js"></script>
+    </body>
+    </html>
