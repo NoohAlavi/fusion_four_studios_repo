@@ -19,13 +19,9 @@ from file_managing import (
     extract_text_from_text,
     count_keywords
 )
-from flask_frozen import Freezer
 
 # Create the application.
 APP = flask.Flask(__name__)
-
-# Initialize Freezer
-freezer = Freezer(APP)
 
 #Data
 DATA_FOLDER = 'data'
@@ -333,20 +329,6 @@ def get_start_of_week():
     start_of_week = config.get('startOfWeek', 'Sun')  # Default to 'Sun' if not set
     return jsonify({'startOfWeek': start_of_week})
 
-@APP.route('/freeze', methods=['GET'])
-def freeze():
-    """
-    Freezes the Flask application into static files.
-    """
-    try:
-        freezer.freeze()
-        return jsonify({'status': 'success', 'message': 'Application frozen successfully!'})
-    except Exception as e:
-        return jsonify({'status': 'error', 'message': str(e)})
-
 if __name__ == '__main__':
-    APP.debug=True
-    if os.getenv('FREEZE', 'false').lower() == 'true':
-        freezer.freeze()
-    else:
-        APP.run()
+    APP.debug = True
+    APP.run()
