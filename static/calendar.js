@@ -696,7 +696,11 @@ document.addEventListener('DOMContentLoaded', function () {
       });
 
       const li = document.createElement('li');
-      li.textContent = `${event[2]}: ${new Date(event[7]).toLocaleString()} - ${new Date(event[8]).toLocaleString()}`;
+      // li.textContent = `${event[2]}: ${new Date(event[7]).toLocaleString()} - ${new Date(event[8]).toLocaleString()}`;
+      let renderLocation = !(event[5] == "");
+
+      li.textContent = renderLocation ? `${event[2]} — 📍 ${event[5]}` : `${event[2]}`;
+      
       li.style.listStyle = 'none';
 
       eventContainer.appendChild(delBtn);
@@ -865,7 +869,8 @@ document.addEventListener('DOMContentLoaded', function () {
       });
 
       const li = document.createElement('li');
-      li.textContent = `${task[2]}: ${new Date(task[5]).toLocaleString()}`;
+      // li.textContent = `${task[2]}: ${new Date(task[5]).toLocaleString()}`;
+      li.textContent = `${task[2]}`;
       li.style.listStyle = 'none';
 
       taskContainer.appendChild(delBtn);
