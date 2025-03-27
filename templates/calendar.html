@@ -12,9 +12,13 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Event Horizon Calendar</title>
         <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+        <link rel="icon" type="image/png" href="{{ url_for('static', filename='icon.png') }}">
     </head>
     <body>
-        <h1 class="title">Event Horizon Calendar</h1>
+        <div style="display: flex; align-items: center; justify-content: center; text-align: center; position: relative; margin: 30px 0;">
+            <img src="{{ url_for('static', filename='icon.png') }}" alt="Event Horizon Calendar Logo" style="width: 100px; height: 100px; position: absolute; left: 0; margin-top: 20px; margin-bottom: 20px;">
+            <h1 class="title" style="margin: 0; flex-grow: 1;">Event Horizon Calendar</h1>
+        </div>
         <div class="main-container">
 
             <!-- Left: Calendar Panel -->
