@@ -647,7 +647,11 @@ document.addEventListener('DOMContentLoaded', function () {
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ id: event[0] }),
           })
-            .then(() => eventContainer.remove(), renderCalendar())
+            .then(() => {
+              eventContainer.remove();
+      
+              renderCalendar();
+            })
             .catch(error => console.error('Error deleting event:', error));
         }
       });
@@ -817,7 +821,11 @@ document.addEventListener('DOMContentLoaded', function () {
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ id: task[0] }),
           })
-            .then(() => taskContainer.remove(), renderCalendar())
+          .then(() => {
+            taskContainer.remove();
+    
+            renderCalendar();
+          })
             .catch(error => console.error('Error deleting task:', error));
         }
       });
