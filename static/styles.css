@@ -55,20 +55,45 @@ button {
     border: 1px solid #ccc;
 }
 
+#taskPriortizerBtn {
+    margin-top: 10px;
+}
+
 .days-header,
 .days-container {
     display: grid;
     grid-template-columns: repeat(7, 1fr);
+    margin-top: 10px;
     gap: 10px;
 }
 
 .day {
-    text-align: center;
-    padding: 30px;
+    position: relative;
+    overflow-y: auto;
+    height: 80px;
     background: #f8f8f8;
     border: 1px solid #ddd;
-    font-size: 18px;
+    padding-top: 20px;
+
 }
+
+.day-number {
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    font-weight: bold;
+}
+
+.events-container {
+    height: calc(100% - 20px);
+    overflow-y: auto;
+    padding-bottom: 15px;
+  }
+
+.days-header{
+    text-align: center;
+    font-size: 20px;
+} 
 
 .header-day {
     font-weight: bold;
@@ -160,7 +185,7 @@ button {
 }
 
 .viewControls button:hover {
-    background: rgb(200,200,200);
+    background: rgb(200, 200, 200);
     transition: all 0.2s;
 }
 
@@ -186,8 +211,9 @@ button {
     margin-left: 5px;
 }
 
-#save-day:active, #goToDate:active{
-    background: rgb(170,170,170)
+#save-day:active,
+#goToDate:active {
+    background: rgb(170, 170, 170)
 }
 
 .event-panel {
@@ -211,10 +237,11 @@ button {
 
 .event-panel button {
     all: unset;
-    display: inline-block;
     padding: 10px 20px;
     border-radius: 5px;
     font-size: 16px;
+    width: 50%;
+    margin: 10px 0;
     text-align: center;
     cursor: pointer;
     transition: background 0.3s, color 0.3s;
@@ -222,16 +249,12 @@ button {
     color: white;
     font-weight: bold;
     box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+
 }
 
 .event-panel button:hover {
     background-color: #0056b3;
     box-shadow: 0px 6px 10px rgba(0, 0, 0, 0.15);
-}
-
-.event-panel button {
-    width: 50%;
-    margin: 10px 0;
 }
 
 #searchBar {

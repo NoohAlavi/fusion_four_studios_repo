@@ -8,7 +8,7 @@ import os
 import re
 import json
 from flask import request, jsonify
-from Task.Task import Task, Event, Priority
+from Task.Task import Task, Event
 from datetime import datetime
 from file_managing import (
     load_csv, 
@@ -328,19 +328,6 @@ def get_start_of_week():
     config = load_config()
     start_of_week = config.get('startOfWeek', 'Sun')  # Default to 'Sun' if not set
     return jsonify({'startOfWeek': start_of_week})
-
-#CALENDAR ROUTES
-@APP.route('/get_daily_task', methods=['GET'])
-def get_daily_events():
-    date = [request.args.get('year'), request.args.get('month'), request.args.get('day')]
-    date = datetime(date[0], date[1], date[2])
-
-    tasks = load_csv(TASKS_CSV)
-    tasks_on_date = [
-        task for task in tasks if datetime.strptime(task[5], "%Y-%m-%dT%H:%M").date() == date.date()
-    ]
-
-    return flask.jsonify({'tasks': [tasks_on_date]})
 
 if __name__ == '__main__':
     APP.debug=True

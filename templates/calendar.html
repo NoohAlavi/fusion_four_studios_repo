@@ -26,6 +26,10 @@
                         <button class="periodButton" id="nextPeriod">➡️</button>
                     </div>
                     <div id="calendar-container"></div>
+                    <div id="prioritizedTaskContainer" style="display: none;">
+                        <button id="taskPriortizerBtn">Task Prioritizer</button>
+                        <ul id="prioritizedTaskList"></ul>
+                    </div>
                 </div>
                 <div class="view-toggle">
                     <div class="viewControls">
@@ -106,6 +110,7 @@
                         <option value="once" selected>Once</option>
                         <option value="weekly">Weekly</option>
                         <option value="monthly">Monthly</option>
+                        <option value="yearly">Yearly</option>
                     </select>
 
                     <label for="eventColour">Colour:</label>
@@ -116,6 +121,7 @@
 
                     <button type="submit">Submit</button>
                 </form>
+                <div id="eventErrorMessages"></div>
             </div>
         </div>
 
@@ -151,6 +157,7 @@
 
                     <button type="submit">Submit</button>
                 </form>
+                <div id="taskErrorMessages"></div>
             </div>
         </div>
 
