@@ -324,7 +324,7 @@ button {
     max-width: 500px;
 }
 
-button[type="submit"] {
+.submitTask, .submitEvent {
     margin-top: 15px;
 }
 
