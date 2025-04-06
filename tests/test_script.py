@@ -1,3 +1,8 @@
+#Authors: Johathan Lavoie, Mason Cacheino, Nooh Alavi, Rahif Haffeez, Shawn Xiao
+#Date: March 31st, 2025
+#Filename: test_script.py
+#Description: Test file, using selenium and pytest. Automatically tests adding an event/task, deleting event/task, and c
+
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 import time
@@ -5,7 +10,7 @@ import pytest
 
 # Set up the WebDriver
 driver = webdriver.Chrome()
-driver.get("http://localhost:5000")  # Update with your actual app URL
+driver.get("http://localhost:5000") 
 driver.maximize_window()
 
 def set_datetime_value(element, value):
@@ -24,18 +29,18 @@ def close_all_modals():
             try:
                 close_btn = modal.find_element(By.CSS_SELECTOR, ".close")
                 close_btn.click()
-                time.sleep(1)  # Allow the modal to close
+                time.sleep(1)
             except Exception as e:
                 print("Error closing modal:", e)
 
 def test_calendar_navigation():
     """Tests switching between day, week, and month views"""
-    close_all_modals()  # Ensure no modals are open
+    close_all_modals() 
     views = ["monthView", "weekView", "dayView"]
     for view in views:
         button = driver.find_element(By.ID, view)
         button.click()
-        time.sleep(1)  # Allow UI update
+        time.sleep(1) 
         assert driver.find_element(By.ID, "calendar-container").is_displayed()
 
 def test_event_creation():
@@ -43,16 +48,16 @@ def test_event_creation():
     close_all_modals()
     driver.find_element(By.ID, "openEventModal").click() 
     time.sleep(1)
+    
+    # Add values to the event form
     driver.find_element(By.ID, "eventTitle").clear()
     driver.find_element(By.ID, "eventTitle").send_keys("Test Event")
-
-    # Set datetime values using JavaScript
     start_input = driver.find_element(By.ID, "startTime")
     end_input = driver.find_element(By.ID, "endTime")
     set_datetime_value(start_input, "2025-04-17T10:00")
     set_datetime_value(end_input, "2025-04-17T13:00")
 
-    # Click the submit button inside the event form
+
     driver.find_element(By.ID, "submitEvent").click()
     time.sleep(1)
     close_all_modals()
@@ -63,14 +68,16 @@ def test_event_invalid_date():
     close_all_modals()
     driver.find_element(By.ID, "openEventModal").click()
     time.sleep(1)
+    
+    # Add values to the event form
     driver.find_element(By.ID, "eventTitle").clear()
     driver.find_element(By.ID, "eventTitle").send_keys("Invalid Event")
-
     start_input = driver.find_element(By.ID, "startTime")
     end_input = driver.find_element(By.ID, "endTime")
     set_datetime_value(start_input, "2025-04-17T10:00")
     set_datetime_value(end_input, "2025-04-16T10:00")
 
+    # Click submit
     driver.find_element(By.ID, "submitEvent").click()
     time.sleep(1)
     close_all_modals()
@@ -81,12 +88,14 @@ def test_task_creation():
     close_all_modals()
     driver.find_element(By.ID, "openTaskModal").click()
     time.sleep(1)
+    
+    # Add values to task form
     driver.find_element(By.ID, "taskTitle").clear()
     driver.find_element(By.ID, "taskTitle").send_keys("Test Task")
-
     deadline_input = driver.find_element(By.ID, "deadline")
     set_datetime_value(deadline_input, "2025-04-12T12:00")
     
+    # Click submit
     driver.find_element(By.ID, "submitTask").click()
     time.sleep(1)
     close_all_modals()
@@ -97,12 +106,14 @@ def test_task_invalid_deadline():
     close_all_modals()
     driver.find_element(By.ID, "openTaskModal").click()
     time.sleep(1)
+    
+    # Add values to task form
     driver.find_element(By.ID, "taskTitle").clear()
     driver.find_element(By.ID, "taskTitle").send_keys("Old Task")
-    
     deadline_input = driver.find_element(By.ID, "deadline")
     set_datetime_value(deadline_input, "2023-01-01T12:00")
     
+    # Click submit
     driver.find_element(By.ID, "submitTask").click()
     time.sleep(1)
     close_all_modals()
