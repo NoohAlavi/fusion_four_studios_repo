@@ -1,0 +1,5 @@
+﻿Team Meeting
+This is a sample document for a team meeting.
+The meeting will start on 2025-04-15T09:00 and end on 2025-04-15T11:00.
+Please review the agenda and prepare your reports.
+Budget, strategy, planning, and execution are key topics.
